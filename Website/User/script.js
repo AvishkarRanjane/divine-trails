@@ -959,7 +959,7 @@ function initForm() {
             if (!userStr) {
                 // Save draft in sessionStorage and redirect cleanly
                 sessionStorage.setItem('pendingBooking', JSON.stringify(bookingData));
-                window.location.href = '/Website/User/auth.html?redirect=booking';
+                window.location.href = '/auth.html?redirect=booking';
                 return;
             }
 

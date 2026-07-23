@@ -25,28 +25,28 @@ document.addEventListener('DOMContentLoaded', () => {
         subtitleText.innerText = 'Join us to explore divine trails.';
     });
 
-    // Helper: Get registered users database
+    // Helper: Get registered users
     function getRegisteredUsers() {
         const usersStr = localStorage.getItem('divineTrailsUsers');
         return usersStr ? JSON.parse(usersStr) : [];
     }
 
-    // Helper: Redirect after login based on email
+    // Helper: After login, redirect based on email
     function completeAuthRedirect(email) {
         const userEmail = email ? email.toLowerCase().trim() : '';
 
-        // Admin email → redirect to Admin Panel
+        // ✅ Admin email → go to Admin Panel
         if (userEmail === 'mr.avishkarranjane07@gmail.com') {
-            window.location.href = '/Website/Admin/index.html';
+            window.location.href = '/admin';
             return;
         }
 
-        // Regular user → go back to homepage or pending booking
+        // ✅ Regular user → go back to homepage
         const pending = sessionStorage.getItem('pendingBooking');
         if (pending) {
-            window.location.href = '/Website/User/index.html#contact';
+            window.location.href = '/#contact';
         } else {
-            window.location.href = '/Website/User/index.html';
+            window.location.href = '/';
         }
     }
 
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const email = document.getElementById('login-email').value.trim();
         const pass = document.getElementById('login-pass').value.trim();
-        
+
         if (email && pass) {
             const registeredUsers = getRegisteredUsers();
             const existingUser = registeredUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
@@ -70,10 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const loggedInUser = { name: userName, email: email };
             localStorage.setItem('divineTrailsUser', JSON.stringify(loggedInUser));
-            
+
             const btn = formLogin.querySelector('button[type="submit"]');
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';
-            
+
             setTimeout(() => {
                 completeAuthRedirect(email);
             }, 800);
@@ -88,10 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = document.getElementById('signup-name').value.trim();
         const email = document.getElementById('signup-email').value.trim();
         const pass = document.getElementById('signup-pass').value.trim();
-        
+
         if (name && email && pass.length >= 6) {
             const registeredUsers = getRegisteredUsers();
-            
+
             const existingIndex = registeredUsers.findIndex(u => u.email.toLowerCase() === email.toLowerCase());
             if (existingIndex >= 0) {
                 registeredUsers[existingIndex] = { name, email, pass };
@@ -100,13 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             localStorage.setItem('divineTrailsUsers', JSON.stringify(registeredUsers));
-            
+
             const user = { name: name, email: email };
             localStorage.setItem('divineTrailsUser', JSON.stringify(user));
-            
+
             const btn = formSignup.querySelector('button[type="submit"]');
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating account...';
-            
+
             setTimeout(() => {
                 completeAuthRedirect(email);
             }, 800);
@@ -126,11 +126,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Mock Social Login Logic
+// Mock Social Login
 window.mockSocialLogin = function(provider) {
     const user = { name: provider + " Traveler", email: 'traveler@example.com' };
     localStorage.setItem('divineTrailsUser', JSON.stringify(user));
-    
+
     const activeForm = document.querySelector('.auth-form.active');
     if (activeForm) {
         const btns = activeForm.querySelectorAll('.social-btn');
@@ -144,9 +144,9 @@ window.mockSocialLogin = function(provider) {
     setTimeout(() => {
         const pending = sessionStorage.getItem('pendingBooking');
         if (pending) {
-            window.location.href = '/Website/User/index.html#contact';
+            window.location.href = '/#contact';
         } else {
-            window.location.href = '/Website/User/index.html';
+            window.location.href = '/';
         }
     }, 800);
 };

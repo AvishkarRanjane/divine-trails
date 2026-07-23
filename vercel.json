@@ -1,9 +1,9 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/Website/User/index.html" },
-    { "source": "/auth", "destination": "/Website/User/auth.html" },
     { "source": "/admin", "destination": "/Website/Admin/index.html" },
+    { "source": "/app-admin", "destination": "/App/Admin/index.html" },
     { "source": "/app", "destination": "/App/User/index.html" },
-    { "source": "/app-admin", "destination": "/App/Admin/index.html" }
+    { "source": "/", "destination": "/Website/User/index.html" },
+    { "source": "/((?!Website/|App/).*)", "destination": "/Website/User/$1" }
   ]
 }

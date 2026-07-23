@@ -35,15 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function completeAuthRedirect(email) {
         const userEmail = email ? email.toLowerCase().trim() : (DivineTrailsSDK.getActiveUser() ? DivineTrailsSDK.getActiveUser().email.toLowerCase() : '');
         if (userEmail === 'mr.avishkarranjane07@gmail.com') {
-            window.location.href = '../Admin/index.html';
+            window.location.href = '/admin';
             return;
         }
 
         const pending = sessionStorage.getItem('pendingBooking');
         if (pending) {
-            window.location.href = 'index.html#contact';
+            window.location.href = '/#contact';
         } else {
-            window.location.href = 'index.html';
+            window.location.href = '/';
         }
     }
 

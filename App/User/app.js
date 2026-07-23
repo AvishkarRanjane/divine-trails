@@ -526,7 +526,7 @@ window.openAuthSheet = function(mode, pendingPkgId) {
 
         if (email.toLowerCase() === 'mr.avishkarranjane07@gmail.com') {
             setTimeout(() => {
-                window.location.href = '../Admin/index.html';
+                window.location.href = '/admin';
             }, 600);
             return;
         }
@@ -606,7 +606,7 @@ function refreshProfileView() {
                 </div>
             </div>
             ${isAdmin ? `
-                <a href="../Admin/index.html" class="ios-btn ios-btn-primary" style="width: 100%; text-align: center; display: block; text-decoration: none; margin-bottom: 10px;">
+                <a href="/admin" class="ios-btn ios-btn-primary" style="width: 100%; text-align: center; display: block; text-decoration: none; margin-bottom: 10px;">
                     <i class="fa-solid fa-crown"></i> Open Mobile Admin Panel
                 </a>
             ` : ''}

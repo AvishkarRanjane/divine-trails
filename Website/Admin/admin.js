@@ -10,8 +10,8 @@ let uploadedBase64Image = null;
 document.addEventListener('DOMContentLoaded', () => {
     // Security Guard: Check if active user is Admin (mr.avishkarranjane07@gmail.com)
     if (!DivineTrailsSDK.isAdminUser()) {
-        alert("🔒 Access Denied: Only Admin (Mr.avishkarranjane07@gmail.com) can access the Admin Panel.\nRedirecting to User Portal...");
-        window.location.href = "../User/index.html";
+        alert("🔒 Access Denied: Please log in with the Admin account (mr.avishkarranjane07@gmail.com) to access the Admin Panel.");
+        window.location.href = "/auth";
         return;
     }
     initTheme();

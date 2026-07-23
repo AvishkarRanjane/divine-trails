@@ -1039,7 +1039,7 @@ function initAuth() {
                         <small>${user.email}</small>
                     </div>
                     ${isAdmin ? `
-                        <a href="../Admin/index.html" class="dropdown-item" style="color: var(--primary-color); font-weight: 700;">
+                        <a href="/admin" class="dropdown-item" style="color: var(--primary-color); font-weight: 700;">
                             <i class="fa-solid fa-crown"></i> Open Admin Panel
                         </a>
                     ` : ''}

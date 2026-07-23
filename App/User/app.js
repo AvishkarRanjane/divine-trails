@@ -232,14 +232,23 @@ function initTheme() {
     }
 }
 
-// Listen for real-time live package updates published by Admin
+// Listen for real-time live package, booking, and review updates published by Admin
 window.addEventListener('divineTrailsPackagesUpdated', () => {
     renderAppPackages();
 });
+window.addEventListener('divineTrailsBookingsUpdated', () => {
+    if (typeof refreshBookingsView === 'function') refreshBookingsView();
+});
+window.addEventListener('divineTrailsReviewsUpdated', () => {
+    if (typeof renderReviews === 'function') renderReviews();
+});
 window.addEventListener('storage', (e) => {
-    if (e.key === 'divineTrailsPackages' || e.key === 'divineTrailsBookings') {
+    if (e.key === 'divineTrailsPackages') {
         renderAppPackages();
-        if (currentTab === 'bookings') refreshBookingsView();
+    } else if (e.key === 'divineTrailsBookings') {
+        if (typeof refreshBookingsView === 'function') refreshBookingsView();
+    } else if (e.key === 'divineTrailsReviews') {
+        if (typeof renderReviews === 'function') renderReviews();
     }
 });
 

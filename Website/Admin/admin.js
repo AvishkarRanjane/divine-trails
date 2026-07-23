@@ -19,6 +19,32 @@ document.addEventListener('DOMContentLoaded', () => {
     initSearch();
 });
 
+// Real-time synchronization listeners across Web & Mobile App
+window.addEventListener('divineTrailsPackagesUpdated', () => {
+    adminPackages = DivineTrailsSDK.getPackages();
+    renderMetrics();
+    renderPackagesList();
+});
+window.addEventListener('divineTrailsBookingsUpdated', () => {
+    renderBookingsTable();
+    renderMetrics();
+});
+window.addEventListener('divineTrailsReviewsUpdated', () => {
+    renderReviewsList();
+});
+window.addEventListener('storage', (e) => {
+    if (e.key === 'divineTrailsPackages') {
+        adminPackages = DivineTrailsSDK.getPackages();
+        renderMetrics();
+        renderPackagesList();
+    } else if (e.key === 'divineTrailsBookings') {
+        renderBookingsTable();
+        renderMetrics();
+    } else if (e.key === 'divineTrailsReviews') {
+        renderReviewsList();
+    }
+});
+
 // Load All Admin Data
 function loadAdminData() {
     adminPackages = DivineTrailsSDK.getPackages();
@@ -244,18 +270,20 @@ window.handlePkgFormSubmit = function(e) {
         });
     }
 
+    DivineTrailsSDK.savePackages(adminPackages);
     closePkgModal();
     renderPackagesList();
-    markChangesPending();
-    showToast("Package saved locally! Click 'Save All & Apply Live' to publish.");
+    renderMetrics();
+    showToast("✅ Published Live! Website and Mobile App updated in real-time.");
 };
 
 window.deletePackage = function(id) {
     if (!confirm("Are you sure you want to delete this tour package?")) return;
     adminPackages = adminPackages.filter(p => p.id !== id);
+    DivineTrailsSDK.savePackages(adminPackages);
     renderPackagesList();
-    markChangesPending();
-    showToast("Package removed. Click 'Save All & Apply Live' to publish changes.");
+    renderMetrics();
+    showToast("✅ Deleted Live! Website and Mobile App updated in real-time.");
 };
 
 // Pending Changes State

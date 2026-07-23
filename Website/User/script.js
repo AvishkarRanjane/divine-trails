@@ -262,13 +262,29 @@ let sortOption = 'default';
 
 const packagesContainer = document.getElementById('packages-container');
 
-// Listen for real-time live package updates published by Admin
+// Listen for real-time live package, booking, and review updates published across Admin & App
 window.addEventListener('divineTrailsPackagesUpdated', () => {
     filterAndRenderPackages();
 });
+window.addEventListener('divineTrailsBookingsUpdated', () => {
+    const modal = document.getElementById('my-bookings-modal');
+    if (modal && modal.classList.contains('active')) {
+        openMyBookingsModal();
+    }
+});
+window.addEventListener('divineTrailsReviewsUpdated', () => {
+    loadSavedReviews();
+});
 window.addEventListener('storage', (e) => {
-    if (e.key === 'divineTrailsPackages' || e.key === 'divineTrailsBookings') {
+    if (e.key === 'divineTrailsPackages') {
         filterAndRenderPackages();
+    } else if (e.key === 'divineTrailsBookings') {
+        const modal = document.getElementById('my-bookings-modal');
+        if (modal && modal.classList.contains('active')) {
+            openMyBookingsModal();
+        }
+    } else if (e.key === 'divineTrailsReviews') {
+        loadSavedReviews();
     }
 });
 

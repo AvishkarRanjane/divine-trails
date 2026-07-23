@@ -19,6 +19,32 @@ document.addEventListener('DOMContentLoaded', () => {
     initBottomSheetBackdrop();
 });
 
+// Real-time synchronization listeners across Web & Mobile App
+window.addEventListener('divineTrailsPackagesUpdated', () => {
+    adminPackages = DivineTrailsSDK.getPackages();
+    renderStats();
+    renderPackagesList();
+});
+window.addEventListener('divineTrailsBookingsUpdated', () => {
+    renderBookingsList();
+    renderStats();
+});
+window.addEventListener('divineTrailsReviewsUpdated', () => {
+    renderReviewsList();
+});
+window.addEventListener('storage', (e) => {
+    if (e.key === 'divineTrailsPackages') {
+        adminPackages = DivineTrailsSDK.getPackages();
+        renderStats();
+        renderPackagesList();
+    } else if (e.key === 'divineTrailsBookings') {
+        renderBookingsList();
+        renderStats();
+    } else if (e.key === 'divineTrailsReviews') {
+        renderReviewsList();
+    }
+});
+
 // Clock
 function initClock() {
     const clockEl = document.getElementById('ios-clock');
@@ -217,19 +243,21 @@ function openPackageSheetModal(pkg) {
             });
         }
 
+        DivineTrailsSDK.savePackages(adminPackages);
         closeBottomSheet();
         renderPackagesList();
-        markPending();
-        showToast("Package saved! Go to 'Publish' tab to apply live.");
+        renderStats();
+        showToast("✅ Published Live! Website and Mobile App updated in real-time.");
     });
 }
 
 window.deletePackage = function(id) {
     if (!confirm("Delete package?")) return;
     adminPackages = adminPackages.filter(p => p.id !== id);
+    DivineTrailsSDK.savePackages(adminPackages);
     renderPackagesList();
-    markPending();
-    showToast("Package deleted. Click 'Publish' to apply live.");
+    renderStats();
+    showToast("✅ Deleted Live! Website and Mobile App updated in real-time.");
 };
 
 function markPending() {

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - Divine Trails Travel</title>
+    <meta name="description" content="Login or Sign Up to book your sacred temple tours across India.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('assets/images/hero_bg_1782374022780.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            padding: var(--spacing-lg) 0;
+        }
+
+        .auth-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 77, 64, 0.8));
+            z-index: 1;
+        }
+
+        .auth-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 450px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .auth-header {
+            text-align: center;
+            padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .auth-header h2 {
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+        }
+
+        .auth-header p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            background: var(--bg-light);
+        }
+
+        .auth-tab.active {
+            color: var(--primary-color);
+            background: var(--bg-card);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .auth-forms {
+            position: relative;
+            padding: var(--spacing-lg);
+            min-height: 350px;
+        }
+
+        .auth-form {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .auth-form .form-group {
+            margin-bottom: 16px;
+        }
+
+        .auth-form input {
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-error {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .auth-error.show {
+            display: block;
+        }
+
+        .divider {
+            text-align: center;
+            position: relative;
+            margin: var(--spacing-md) 0;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 43%;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+
+        .social-btn {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-btn:hover {
+            background-color: var(--bg-light);
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header (Simple) -->
+    <header id="header" class="scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-om"></i> Divine Trails
+            </a>
+            
+            <div class="nav-actions" style="margin-left: auto;">
+                <a href="index.html" class="btn btn-outline" style="padding: 6px 16px; font-size: 0.9rem; margin-right: 12px; color: var(--text-primary); border-color: var(--text-primary);">Back to Home</a>
+                <button id="theme-toggle" aria-label="Toggle dark mode" style="color: var(--text-primary);">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-page">
+        <div class="auth-overlay"></div>
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2>Welcome Back</h2>
+                <p>Login to book your sacred journey.</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="tab-login">Login</div>
+                <div class="auth-tab" id="tab-signup">Sign Up</div>
+            </div>
+
+            <div class="auth-forms">
+                <div id="auth-notice-banner" class="auth-notice-banner" style="display: none;">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span id="auth-notice-text">Please login or sign up to complete your booking.</span>
+                </div>
+                <!-- Login Form -->
+                <form id="form-login" class="auth-form active">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="login-email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="login-pass" required placeholder="••••••••">
+                    </div>
+                    <div id="login-error" class="auth-error">Invalid email or password.</div>
+                    <button type="submit" class="btn btn-primary full-width" style="margin-top: 16px;">Login</button>
+                    
+                    <div class="divider">OR</div>
+                    <button type="button" class="btn full-width social-btn" onclick="mockSocialLogin('Google')">
+                        <i class="fa-brands fa-google" style="color: #DB4437;"></i> Continue with Google
+                    </button>
+                    <button type="button" class="btn full-width social-btn" onclick="mockSocialLogin('Facebook')">
+                        <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> Continue with Facebook
+                    </button>
+                </form>
+
+                <!-- Sign Up Form -->
+                <form id="form-signup" class="auth-form">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="signup-name" required placeholder="Ramesh Sharma">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="signup-email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="signup-pass" required placeholder="••••••••">
+                    </div>
+                    <div id="signup-error" class="auth-error">Please fill all fields correctly.</div>
+                    <button type="submit" class="btn btn-primary full-width" style="margin-top: 16px;">Create Account</button>
+                    
+                    <div class="divider">OR</div>
+                    <button type="button" class="btn full-width social-btn" onclick="mockSocialLogin('Google')">
+                        <i class="fa-brands fa-google" style="color: #DB4437;"></i> Sign up with Google
+                    </button>
+                    <button type="button" class="btn full-width social-btn" onclick="mockSocialLogin('Facebook')">
+                        <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> Sign up with Facebook
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="firebase-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // Persistent Theme Toggle for Auth Page
+        const themeBtn = document.getElementById('theme-toggle');
+        const icon = themeBtn ? themeBtn.querySelector('i') : null;
+        const root = document.documentElement;
+        
+        // Sync initial theme from localStorage
+        const savedTheme = localStorage.getItem('divineTrailsTheme') || 'light';
+        root.setAttribute('data-theme', savedTheme);
+        if (icon) {
+            icon.className = savedTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+        
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const currentTheme = root.getAttribute('data-theme');
+                const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+                root.setAttribute('data-theme', nextTheme);
+                localStorage.setItem('divineTrailsTheme', nextTheme);
+                if (icon) {
+                    icon.className = nextTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+                }
+            });
+        }
+
+        // Notice Banner Check for redirect query
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('redirect') === 'booking' || sessionStorage.getItem('pendingBooking')) {
+            const banner = document.getElementById('auth-notice-banner');
+            if (banner) banner.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

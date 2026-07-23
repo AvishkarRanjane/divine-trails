@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Divine Trails | iOS App Admin</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Apple iOS Admin Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="app-root">
+        <!-- iOS Status Bar Mockup -->
+        <div class="ios-status-bar">
+            <span id="ios-clock">9:41 AM</span>
+            <div class="icons">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full"></i>
+            </div>
+        </div>
+
+        <!-- iOS Header -->
+        <header class="ios-header">
+            <div class="ios-header-brand">
+                <i class="fa-solid fa-om"></i> App Admin
+            </div>
+            <div class="ios-header-actions">
+                <button id="ios-theme-btn" class="ios-icon-btn" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Views Container -->
+        <main class="ios-views-container">
+            
+            <!-- 1. DASHBOARD TAB -->
+            <section id="tab-dashboard" class="tab-view active">
+                <h1 class="ios-large-title">App Control Center</h1>
+                <p class="ios-subtitle">Live Real-Time Yatra Management</p>
+
+                <!-- Pending Save Notification Banner -->
+                <div id="ios-pending-banner" class="ios-card" style="background: linear-gradient(135deg, var(--ios-primary), #E67E22); color: #FFFFFF; display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong style="font-size: 1rem;"><i class="fa-solid fa-circle-exclamation"></i> Pending Changes</strong>
+                            <p style="font-size: 0.8rem; margin: 0; opacity: 0.9;">Click 'Publish' to make edits live.</p>
+                        </div>
+                        <button class="ios-btn" style="background: #FFFFFF; color: var(--ios-primary); padding: 8px 14px; font-weight: 700;" onclick="openSaveLiveSheet()">
+                            Publish Live
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="ios-card" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 16px;">
+                    <div style="text-align: center; background: var(--ios-bg-secondary); padding: 12px; border-radius: 16px;">
+                        <span style="font-size: 1.4rem; font-weight: 800; color: var(--ios-primary);" id="stat-active-pkgs">6</span>
+                        <p style="font-size: 0.75rem; color: var(--ios-text-secondary); margin: 0;">Active Yatras</p>
+                    </div>
+                    <div style="text-align: center; background: var(--ios-bg-secondary); padding: 12px; border-radius: 16px;">
+                        <span style="font-size: 1.4rem; font-weight: 800; color: var(--ios-secondary);" id="stat-bookings-count">0</span>
+                        <p style="font-size: 0.75rem; color: var(--ios-text-secondary); margin: 0;">Total Bookings</p>
+                    </div>
+                </div>
+
+                <!-- Quick Action Buttons -->
+                <div class="ios-card">
+                    <h3 style="font-size: 1.05rem; margin-bottom: 12px;">Quick Admin Actions</h3>
+                    <button class="ios-btn ios-btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="openAddPackageSheet()">
+                        <i class="fa-solid fa-plus"></i> Add New Yatra Package
+                    </button>
+                    <a href="../User/index.html" class="ios-btn ios-btn-secondary" style="width: 100%; text-align: center; display: block; text-decoration: none;" target="_blank">
+                        <i class="fa-solid fa-mobile-screen"></i> Preview User App
+                    </a>
+                </div>
+            </section>
+
+            <!-- 2. PACKAGES TAB -->
+            <section id="tab-packages" class="tab-view">
+                <h1 class="ios-large-title">Package Control</h1>
+                <p class="ios-subtitle">Edit prices, descriptions & images</p>
+
+                <div id="ios-pkg-admin-list">
+                    <!-- Dynamic Admin Package Cards -->
+                </div>
+            </section>
+
+            <!-- 3. BOOKINGS TAB -->
+            <section id="tab-bookings" class="tab-view">
+                <h1 class="ios-large-title">Bookings Sync</h1>
+                <p class="ios-subtitle">Synced across Web & Mobile</p>
+
+                <div id="ios-bookings-admin-list">
+                    <!-- Bookings List Injected via JS -->
+                </div>
+            </section>
+
+            <!-- 4. REVIEWS TAB -->
+            <section id="tab-reviews" class="tab-view">
+                <h1 class="ios-large-title">Pilgrim Feedback</h1>
+                <p class="ios-subtitle">Manage customer reviews</p>
+
+                <div id="ios-reviews-admin-list">
+                    <!-- Reviews Injected via JS -->
+                </div>
+            </section>
+
+            <!-- 5. PUBLISH TAB -->
+            <section id="tab-publish" class="tab-view">
+                <h1 class="ios-large-title">Publish Live</h1>
+                <p class="ios-subtitle">Save & Sync with Cloud Database</p>
+
+                <div class="ios-card" style="text-align: center; padding: 30px 20px;">
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 3rem; color: var(--ios-primary); margin-bottom: 14px;"></i>
+                    <h2 style="font-size: 1.3rem; margin-bottom: 8px;">Apply Changes Live</h2>
+                    <p style="font-size: 0.88rem; color: var(--ios-text-secondary); margin-bottom: 20px;">
+                        Whatever edits, image uploads or status changes you make will instantly be updated **LIVE** across Website and App!
+                    </p>
+                    <button class="ios-btn ios-btn-primary" style="width: 100%; padding: 14px; font-size: 1rem;" onclick="confirmSaveAllLive()">
+                        <i class="fa-solid fa-circle-check"></i> Save All & Apply Live
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Floating iOS Bottom Tab Bar -->
+        <nav class="ios-tab-bar">
+            <button class="ios-tab-item active" onclick="switchToAdminTab('dashboard')" id="tab-btn-dashboard">
+                <i class="fa-solid fa-gauge-high"></i>
+                <span>Dashboard</span>
+            </button>
+            <button class="ios-tab-item" onclick="switchToAdminTab('packages')" id="tab-btn-packages">
+                <i class="fa-solid fa-box-archive"></i>
+                <span>Packages</span>
+            </button>
+            <button class="ios-tab-item" onclick="switchToAdminTab('bookings')" id="tab-btn-bookings">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Bookings</span>
+            </button>
+            <button class="ios-tab-item" onclick="switchToAdminTab('reviews')" id="tab-btn-reviews">
+                <i class="fa-solid fa-star"></i>
+                <span>Reviews</span>
+            </button>
+            <button class="ios-tab-item" onclick="switchToAdminTab('publish')" id="tab-btn-publish">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Publish</span>
+            </button>
+        </nav>
+
+        <!-- iOS Bottom Sheet Backdrop -->
+        <div id="ios-sheet-backdrop" class="ios-sheet-backdrop"></div>
+
+        <!-- iOS Bottom Sheet Modal -->
+        <div id="ios-bottom-sheet" class="ios-bottom-sheet">
+            <div class="ios-sheet-grabber"></div>
+            <div class="ios-sheet-content" id="ios-sheet-body">
+                <!-- Sheet Content Injected via JS -->
+            </div>
+        </div>
+
+        <!-- iOS Toast -->
+        <div id="ios-toast" class="ios-toast">
+            <i class="fa-solid fa-circle-check"></i>
+            <span id="ios-toast-msg">Action updated successfully</span>
+        </div>
+    </div>
+
+    <!-- Shared Firebase Client -->
+    <script src="firebase-config.js"></script>
+    <!-- Mobile App Admin Logic -->
+    <script src="admin-app.js"></script>
+</body>
+</html>

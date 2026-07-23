@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Divine Trails | iOS Yatra App</title>
+    <meta name="description" content="Book sacred temple tour packages across India with Divine Trails Mobile App.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Apple iOS Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="app-root">
+        <!-- iOS Status Bar Mockup -->
+        <div class="ios-status-bar">
+            <span id="ios-clock">9:41 AM</span>
+            <div class="icons">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full"></i>
+            </div>
+        </div>
+
+        <!-- iOS Header -->
+        <header class="ios-header">
+            <div class="ios-header-brand">
+                <i class="fa-solid fa-om"></i> Divine Trails
+            </div>
+            <div class="ios-header-actions">
+                <button id="ios-theme-btn" class="ios-icon-btn" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Views Container -->
+        <main class="ios-views-container">
+            
+            <!-- 1. HOME TAB -->
+            <section id="tab-home" class="tab-view active">
+                <h1 class="ios-large-title">Discover Yatras</h1>
+                <p class="ios-subtitle">Sacred Temple Journeys Across India</p>
+
+                <!-- Hero Card -->
+                <div class="ios-hero-card">
+                    <img src="assets/images/hero_bg_1782374022780.png" alt="Sacred Temple">
+                    <div class="ios-hero-content">
+                        <span class="ios-hero-tag">Divine Heritage</span>
+                        <h2 class="ios-hero-title">Embark on a Sacred Pilgrimage</h2>
+                        <p class="ios-hero-desc">Experience comfortable, culturally respectful temple tours with VIP darshan assistance.</p>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Grid -->
+                <div class="ios-card" style="display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; padding: 14px 10px;">
+                    <div>
+                        <strong style="font-size: 1.3rem; color: var(--ios-primary);">15+</strong>
+                        <p style="font-size: 0.75rem; color: var(--ios-text-secondary); margin: 0;">Years Experience</p>
+                    </div>
+                    <div>
+                        <strong style="font-size: 1.3rem; color: var(--ios-primary);">12K+</strong>
+                        <p style="font-size: 0.75rem; color: var(--ios-text-secondary); margin: 0;">Happy Pilgrims</p>
+                    </div>
+                    <div>
+                        <strong style="font-size: 1.3rem; color: var(--ios-primary);">50+</strong>
+                        <p style="font-size: 0.75rem; color: var(--ios-text-secondary); margin: 0;">Holy Shrines</p>
+                    </div>
+                </div>
+
+                <!-- Featured Shrines Slider -->
+                <h3 style="font-size: 1.15rem; margin: 16px 0 10px;">Featured Sacred Destinations</h3>
+                <div class="ios-pills-row" style="gap: 12px; margin-bottom: 20px;">
+                    <div class="ios-card clickable" onclick="switchToTab('packages')" style="min-width: 140px; margin-bottom: 0; padding: 10px;">
+                        <img src="assets/images/dest_kedarnath_1782373896529.png" style="width: 100%; height: 90px; object-fit: cover; border-radius: 12px; margin-bottom: 8px;">
+                        <strong style="font-size: 0.9rem;">Kedarnath</strong>
+                        <p style="font-size: 0.78rem; color: var(--ios-text-secondary); margin: 0;">Himalayas</p>
+                    </div>
+                    <div class="ios-card clickable" onclick="switchToTab('packages')" style="min-width: 140px; margin-bottom: 0; padding: 10px;">
+                        <img src="assets/images/dest_varanasi_1782373920388.png" style="width: 100%; height: 90px; object-fit: cover; border-radius: 12px; margin-bottom: 8px;">
+                        <strong style="font-size: 0.9rem;">Varanasi</strong>
+                        <p style="font-size: 0.78rem; color: var(--ios-text-secondary); margin: 0;">Holy Ganges</p>
+                    </div>
+                    <div class="ios-card clickable" onclick="switchToTab('packages')" style="min-width: 140px; margin-bottom: 0; padding: 10px;">
+                        <img src="assets/images/dest_madurai_1782373908269.png" style="width: 100%; height: 90px; object-fit: cover; border-radius: 12px; margin-bottom: 8px;">
+                        <strong style="font-size: 0.9rem;">Madurai</strong>
+                        <p style="font-size: 0.78rem; color: var(--ios-text-secondary); margin: 0;">South India</p>
+                    </div>
+                </div>
+
+                <!-- Call to Action Card -->
+                <div class="ios-card" style="background: linear-gradient(135deg, var(--ios-secondary), #00332B); color: #FFFFFF;">
+                    <h3 style="color: #FFFFFF; font-size: 1.15rem; margin-bottom: 6px;">Need Custom Itinerary?</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.88rem; margin-bottom: 14px;">Our travel experts tailor packages for senior citizens & families.</p>
+                    <button class="ios-btn ios-btn-primary" onclick="switchToTab('packages')">Explore All Packages</button>
+                </div>
+            </section>
+
+            <!-- 2. PACKAGES TAB -->
+            <section id="tab-packages" class="tab-view">
+                <h1 class="ios-large-title">Tour Packages</h1>
+                <p class="ios-subtitle">Select your divine temple circuit</p>
+
+                <!-- Search Box -->
+                <div class="ios-search-wrapper">
+                    <div class="ios-search-input-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="ios-search-input" placeholder="Search temple, city or yatra...">
+                    </div>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="ios-pills-row">
+                    <button class="ios-pill active" data-filter="all">All Yatras</button>
+                    <button class="ios-pill" data-filter="north">North India</button>
+                    <button class="ios-pill" data-filter="south">South India</button>
+                    <button class="ios-pill" data-filter="weekend">Short Tours</button>
+                </div>
+
+                <!-- Sort Control -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <span style="font-size: 0.85rem; color: var(--ios-text-secondary);" id="ios-pkg-count">Showing 6 Yatras</span>
+                    <select id="ios-sort-select" style="background: var(--ios-bg-secondary); color: var(--ios-text); border: none; padding: 6px 12px; border-radius: 12px; font-size: 0.82rem; font-family: var(--font-apple);">
+                        <option value="default">Sort: Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="duration-asc">Duration: Shortest</option>
+                    </select>
+                </div>
+
+                <!-- Packages List Container -->
+                <div id="ios-packages-list">
+                    <!-- Dynamic Package Cards -->
+                </div>
+            </section>
+
+            <!-- 3. GALLERY TAB -->
+            <section id="tab-gallery" class="tab-view">
+                <h1 class="ios-large-title">Sacred Moments</h1>
+                <p class="ios-subtitle">Visual journey of devotion across India</p>
+
+                <div class="ios-gallery-grid">
+                    <div class="ios-gallery-item" onclick="openLightbox(0)">
+                        <img src="assets/images/gal_1_1782373941988.png" alt="Ancient Temple Architecture">
+                    </div>
+                    <div class="ios-gallery-item" onclick="openLightbox(1)">
+                        <img src="assets/images/gal_2_1782373954072.png" alt="Sacred Evening Aarti">
+                    </div>
+                    <div class="ios-gallery-item" onclick="openLightbox(2)">
+                        <img src="assets/images/gal_3_1782373966236.png" alt="Devotees Praying">
+                    </div>
+                    <div class="ios-gallery-item" onclick="openLightbox(3)">
+                        <img src="assets/images/gal_4_1782373977469.png" alt="Majestic Gopuram">
+                    </div>
+                    <div class="ios-gallery-item" onclick="openLightbox(4)">
+                        <img src="assets/images/gal_5_1782373999741.png" alt="Ganga Aarti Ritual">
+                    </div>
+                    <div class="ios-gallery-item" onclick="openLightbox(5)">
+                        <img src="assets/images/gal_6_1782374012756.png" alt="Himalayan Temple Shrine">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. BOOKINGS TAB -->
+            <section id="tab-bookings" class="tab-view">
+                <h1 class="ios-large-title">My Yatras</h1>
+                <p class="ios-subtitle">Cloud Synced Bookings (Firebase)</p>
+
+                <div id="ios-bookings-list">
+                    <!-- Synced Bookings Rendered Here -->
+                </div>
+            </section>
+
+            <!-- 5. PROFILE TAB -->
+            <section id="tab-profile" class="tab-view">
+                <h1 class="ios-large-title">Pilgrim Profile</h1>
+                <p class="ios-subtitle">Account & Preferences</p>
+
+                <div id="ios-profile-card" class="ios-card">
+                    <!-- Session Profile Rendered Here -->
+                </div>
+
+                <div class="ios-card">
+                    <h4 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--ios-primary);">Quick Support</h4>
+                    <a href="tel:9372889465" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ios-text); margin-bottom: 12px;">
+                        <i class="fa-solid fa-phone" style="color: var(--ios-green); font-size: 1.1rem;"></i>
+                        <div>
+                            <strong style="font-size: 0.9rem;">Call Helpline</strong>
+                            <p style="font-size: 0.78rem; color: var(--ios-text-secondary); margin: 0;">9372889465</p>
+                        </div>
+                    </a>
+                    <a href="https://wa.me/919372889465?text=Hello%20Divine%20Trails,%20I%20want%20to%20inquire%20about%20a%20yatra." target="_blank" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ios-text);">
+                        <i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 1.2rem;"></i>
+                        <div>
+                            <strong style="font-size: 0.9rem;">WhatsApp Support</strong>
+                            <p style="font-size: 0.78rem; color: var(--ios-text-secondary); margin: 0;">Instant response</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Floating iOS Bottom Tab Bar -->
+        <nav class="ios-tab-bar">
+            <button class="ios-tab-item active" onclick="switchToTab('home')" id="tab-btn-home">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </button>
+            <button class="ios-tab-item" onclick="switchToTab('packages')" id="tab-btn-packages">
+                <i class="fa-solid fa-om"></i>
+                <span>Packages</span>
+            </button>
+            <button class="ios-tab-item" onclick="switchToTab('gallery')" id="tab-btn-gallery">
+                <i class="fa-solid fa-images"></i>
+                <span>Gallery</span>
+            </button>
+            <button class="ios-tab-item" onclick="switchToTab('bookings')" id="tab-btn-bookings">
+                <i class="fa-solid fa-suitcase-rolling"></i>
+                <span>Bookings</span>
+            </button>
+            <button class="ios-tab-item" onclick="switchToTab('profile')" id="tab-btn-profile">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </button>
+        </nav>
+
+        <!-- iOS Bottom Sheet Backdrop -->
+        <div id="ios-sheet-backdrop" class="ios-sheet-backdrop"></div>
+
+        <!-- iOS Bottom Sheet Modal -->
+        <div id="ios-bottom-sheet" class="ios-bottom-sheet">
+            <div class="ios-sheet-grabber"></div>
+            <div class="ios-sheet-content" id="ios-sheet-body">
+                <!-- Sheet Content Injected via JS -->
+            </div>
+        </div>
+
+        <!-- Lightbox Modal -->
+        <div id="ios-lightbox-modal" class="ios-lightbox">
+            <button class="ios-lightbox-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+            <img id="ios-lightbox-img" src="" alt="Gallery Preview">
+            <div id="ios-lightbox-caption" class="ios-lightbox-caption"></div>
+        </div>
+
+        <!-- iOS Toast -->
+        <div id="ios-toast" class="ios-toast">
+            <i class="fa-solid fa-circle-check"></i>
+            <span id="ios-toast-msg">Booking confirmed successfully!</span>
+        </div>
+    </div>
+
+    <!-- Shared Firebase Client -->
+    <script src="firebase-config.js"></script>
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divine Trails Travel | Sacred Temple Tours</title>
+    <meta name="description" content="Premium temple tour packages in India. Book your spiritual journey with Divine Trails Travel.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-om"></i> Divine Trails
+            </a>
+            
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#packages">Packages</a></li>
+                    <li><a href="#destinations">Destinations</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <div id="user-nav-container">
+                    <a href="auth.html" id="auth-btn" class="btn btn-outline" style="padding: 6px 16px; font-size: 0.9rem; margin-right: 8px;">Login / Sign Up</a>
+                </div>
+                <button id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="navbar-backdrop" class="navbar-backdrop"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="reveal">Embark on a Sacred Journey</h1>
+                <p class="reveal">Discover the divine heritage of India with our premium, culturally respectful temple tour packages.</p>
+                <div class="hero-btns reveal">
+                    <a href="#packages" class="btn btn-primary">Explore Packages</a>
+                    <a href="#contact" class="btn btn-outline">Plan Your Yatra</a>
+                </div>
+                
+                <div class="hero-stats reveal">
+                    <div class="stat-item">
+                        <span class="counter" data-target="15">0</span>+
+                        <p>Years of Service</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="counter" data-target="12000">0</span>+
+                        <p>Happy Pilgrims</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="counter" data-target="50">0</span>+
+                        <p>Sacred Temples</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="about section-padding">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-text reveal">
+                        <div class="section-heading left-align">
+                            <span class="subtitle">Our Story</span>
+                            <h2>Pilgrim-First Planning Approach</h2>
+                        </div>
+                        <p>Founded on the principles of devotion and service, Divine Trails Travel ensures your spiritual journey is peaceful, safe, and comfortable. We handle the logistics so you can focus on the divine.</p>
+                        <ul class="about-features">
+                            <li><i class="fa-solid fa-check-circle"></i> Handpicked premium accommodations</li>
+                            <li><i class="fa-solid fa-check-circle"></i> Comfortable and hygienic transportation</li>
+                            <li><i class="fa-solid fa-check-circle"></i> Local guides with deep cultural knowledge</li>
+                            <li><i class="fa-solid fa-check-circle"></i> Senior citizen & family-friendly itineraries</li>
+                        </ul>
+                    </div>
+                    <div class="about-image reveal">
+                        <img src="assets/images/about_pilgrims_1782373872664.png" alt="Pilgrims at a temple">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us / Steps to Book -->
+        <section id="why-us" class="why-us section-padding bg-light">
+            <div class="container">
+                <div class="section-heading text-center reveal">
+                    <span class="subtitle">Simple Process</span>
+                    <h2>Plan Your Yatra in 3 Easy Steps</h2>
+                </div>
+                <div class="steps-grid">
+                    <div class="step-card reveal">
+                        <div class="step-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h3>1. Choose Your Destination</h3>
+                        <p>Browse our curated temple packages and select the spiritual circuit that calls to you.</p>
+                    </div>
+                    <div class="step-card reveal delay-1">
+                        <div class="step-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                        <h3>2. Customize & Book</h3>
+                        <p>Contact our experts to customize dates, accommodation preferences, and finalize booking.</p>
+                    </div>
+                    <div class="step-card reveal delay-2">
+                        <div class="step-icon"><i class="fa-solid fa-hands-praying"></i></div>
+                        <h3>3. Embark on Darshan</h3>
+                        <p>Enjoy a hassle-free spiritual journey while we take care of all the arrangements.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Temple Packages Section -->
+        <section id="packages" class="packages section-padding">
+            <div class="container">
+                <div class="section-heading text-center reveal">
+                    <span class="subtitle">Sacred Offerings</span>
+                    <h2>Our Temple Tour Packages</h2>
+                    <p class="heading-desc">Explore our thoughtfully crafted itineraries designed for ultimate spiritual fulfillment.</p>
+                </div>
+                
+                <!-- Search & Sort Controls -->
+                <div class="package-controls-wrapper reveal">
+                    <div class="package-search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="package-search-input" placeholder="Search by temple, city, or tour name...">
+                    </div>
+                    <div class="package-sort-box">
+                        <select id="package-sort-select">
+                            <option value="default">Sort By: Featured</option>
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                            <option value="duration-asc">Duration: Shortest First</option>
+                            <option value="duration-desc">Duration: Longest First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Filter Buttons -->
+                <div class="package-filters reveal">
+                    <button class="filter-btn active" data-filter="all">All Packages</button>
+                    <button class="filter-btn" data-filter="north">North India</button>
+                    <button class="filter-btn" data-filter="south">South India</button>
+                    <button class="filter-btn" data-filter="weekend">Short Tours</button>
+                </div>
+
+                <!-- Dynamic Packages Grid -->
+                <div id="packages-container" class="packages-grid">
+                    <!-- Cards will be injected here via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Destinations / Sacred Temples -->
+        <section id="destinations" class="destinations section-padding bg-light">
+            <div class="container">
+                <div class="section-heading text-center reveal">
+                    <span class="subtitle">Holy Shrines</span>
+                    <h2>Featured Sacred Destinations</h2>
+                </div>
+                <div class="destinations-grid">
+                    <div class="dest-card reveal">
+                        <img src="assets/images/dest_varanasi_1782373920388.png" alt="Varanasi Ghats">
+                        <div class="dest-info">
+                            <h3>Varanasi</h3>
+                            <p>The Spiritual Capital</p>
+                        </div>
+                    </div>
+                    <div class="dest-card reveal delay-1">
+                        <img src="assets/images/dest_madurai_1782373908269.png" alt="Meenakshi Temple">
+                        <div class="dest-info">
+                            <h3>Madurai</h3>
+                            <p>City of Temples</p>
+                        </div>
+                    </div>
+                    <div class="dest-card reveal delay-2">
+                        <img src="assets/images/dest_amritsar_1782373884152.png" alt="Golden Temple">
+                        <div class="dest-info">
+                            <h3>Amritsar</h3>
+                            <p>The Golden Shrine</p>
+                        </div>
+                    </div>
+                    <div class="dest-card reveal delay-3">
+                        <img src="assets/images/dest_kedarnath_1782373896529.png" alt="Kedarnath">
+                        <div class="dest-info">
+                            <h3>Kedarnath</h3>
+                            <p>Himalayan Abode</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="gallery section-padding">
+            <div class="container">
+                <div class="section-heading text-center reveal">
+                    <span class="subtitle">Visual Journey</span>
+                    <h2>Moments of Devotion</h2>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item reveal"><img src="assets/images/gal_1_1782373941988.png" alt="Temple Architecture"></div>
+                    <div class="gallery-item reveal"><img src="assets/images/gal_2_1782373954072.png" alt="Evening Aarti"></div>
+                    <div class="gallery-item reveal"><img src="assets/images/gal_3_1782373966236.png" alt="Devotees praying"></div>
+                    <div class="gallery-item reveal"><img src="assets/images/gal_4_1782373977469.png" alt="South Indian Temple"></div>
+                    <div class="gallery-item reveal"><img src="assets/images/gal_5_1782373999741.png" alt="Ganga Aarti"></div>
+                    <div class="gallery-item reveal"><img src="assets/images/gal_6_1782374012756.png" alt="Himalayan Temple"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="testimonials section-padding bg-light">
+            <div class="container">
+                <div class="section-heading text-center reveal">
+                    <span class="subtitle">Pilgrim Stories</span>
+                    <h2>What Our Travelers Say</h2>
+                </div>
+                <div class="testimonial-slider reveal">
+                    <div class="testimonial-card">
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="test-text">"Our Char Dham Yatra was incredibly well-organized. As senior citizens, we were worried about the logistics, but Divine Trails made everything seamless and comfortable."</p>
+                        <div class="test-author">
+                            <h4>Ramesh & Sunita Sharma</h4>
+                            <span>Mumbai, Maharashtra</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="test-text">"The South India Temple Circuit was an eye-opener. The knowledgeable guides explained the history beautifully. Highly recommend their premium packages."</p>
+                        <div class="test-author">
+                            <h4>Priya Patel</h4>
+                            <span>Ahmedabad, Gujarat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Section -->
+        <section id="feedback" class="feedback section-padding">
+            <div class="container">
+                <div class="section-heading text-center reveal">
+                    <span class="subtitle">Share Your Experience</span>
+                    <h2>Leave a Review</h2>
+                    <p class="heading-desc">Help other pilgrims by sharing your divine journey experience with us.</p>
+                </div>
+                <div class="feedback-container reveal">
+                    <form id="feedbackForm" class="feedback-form">
+                        <div class="star-rating" id="starRating">
+                            <i class="fa-solid fa-star" data-rating="1"></i>
+                            <i class="fa-solid fa-star" data-rating="2"></i>
+                            <i class="fa-solid fa-star" data-rating="3"></i>
+                            <i class="fa-solid fa-star" data-rating="4"></i>
+                            <i class="fa-solid fa-star" data-rating="5"></i>
+                        </div>
+                        <p id="rating-text" class="rating-text">Select your rating</p>
+                        <input type="hidden" id="ratingValue" value="0" required>
+                        <textarea id="reviewText" rows="4" placeholder="Write your experience here..." required></textarea>
+                        <button type="submit" class="btn btn-primary full-width">Submit Feedback</button>
+                    </form>
+                    <div id="feedback-success" class="feedback-success">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <p>Thank you! Your review has been added to our testimonials.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq section-padding">
+            <div class="container">
+                <div class="section-heading text-center reveal">
+                    <span class="subtitle">Clear Your Doubts</span>
+                    <h2>Frequently Asked Questions</h2>
+                </div>
+                <div class="faq-accordion reveal">
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            What is included in the tour packages?
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Our standard packages generally include accommodation in 3 to 5-star hotels, daily breakfast and dinner, private AC transportation, toll/parking fees, and a dedicated driver/guide. Flights and train fares are usually excluded but can be arranged upon request.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            Are the packages suitable for senior citizens?
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Yes, absolutely. We specialize in senior-friendly tours. We ensure ground-floor rooms, easy-access vehicles, and arrange for special darshan queues, wheelchairs, or palanquins (dolis) where needed.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            Can we customize the itinerary?
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Yes! All our itineraries can be fully customized based on your preferences, duration, budget, and specific temples you wish to visit.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            Is there a dress code for the temples?
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Most traditional Indian temples require modest dressing. Shoulders and knees should be covered. Some South Indian and specific Jyotirlinga temples have strict dress codes (like Dhoti for men and Saree/Salwar for women). We provide specific guidelines for each temple in your itinerary.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact / Booking Section -->
+        <section id="contact" class="contact section-padding bg-light">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info reveal">
+                        <div class="section-heading left-align">
+                            <span class="subtitle">Get in Touch</span>
+                            <h2>Begin Your Spiritual Journey</h2>
+                        </div>
+                        <p>Have questions or ready to book? Fill out the form, and our travel experts will get back to you within 24 hours.</p>
+                        
+                        <div class="info-items">
+                            <div class="info-item">
+                                <i class="fa-solid fa-phone"></i>
+                                <div>
+                                    <h4>Call Us</h4>
+                                    <p>9372889465</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fa-solid fa-envelope"></i>
+                                <div>
+                                    <h4>Email Us</h4>
+                                    <p>ranjane1985@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <div>
+                                    <h4>Our Office</h4>
+                                    <p>New Panvel (W), New Mumbai, Maharastra, india 410206</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form reveal delay-1">
+                        <form id="bookingForm" novalidate>
+                            <div class="form-group">
+                                <label for="name">Full Name *</label>
+                                <input type="text" id="name" required placeholder="Enter your full name">
+                                <span class="error-msg">Please enter your name.</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" required placeholder="your@email.com">
+                                    <span class="error-msg">Please enter a valid email.</span>
+                                </div>
+                                <div class="form-group half">
+                                    <label for="phone">Phone Number *</label>
+                                    <input type="tel" id="phone" required placeholder="Your contact number">
+                                    <span class="error-msg">Please enter your phone number.</span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label for="packageSelect">Select Package</label>
+                                    <select id="packageSelect">
+                                        <option value="">I need help choosing</option>
+                                        <option value="jyotirlinga">Jyotirlinga Darshan Tour</option>
+                                        <option value="chardham">Char Dham Yatra</option>
+                                        <option value="southindia">South India Temple Circuit</option>
+                                        <option value="ashtavinayak">Maharashtra Ashtavinayak Tour</option>
+                                        <option value="tirupati">Tirupati Balaji Pilgrimage</option>
+                                        <option value="varanasi">Varanasi Spiritual Tour</option>
+                                    </select>
+                                </div>
+                                <div class="form-group half">
+                                    <label for="date">Expected Travel Date</label>
+                                    <input type="date" id="date">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="travelers">Number of Travelers</label>
+                                <input type="number" id="travelers" min="1" placeholder="e.g., 2">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Special Requests / Requirements</label>
+                                <textarea id="message" rows="4" placeholder="Any specific needs like wheelchair access, dietary restrictions, etc."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary full-width">Send Request</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <i class="fa-solid fa-om"></i> Divine Trails
+                    </a>
+                    <p>Facilitating authentic and peaceful spiritual journeys across India's most sacred destinations.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#packages">Tour Packages</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Popular Yatras</h3>
+                    <ul>
+                        <li><a href="#">Char Dham Yatra</a></li>
+                        <li><a href="#">12 Jyotirlinga</a></li>
+                        <li><a href="#">Kashi Vishwanath</a></li>
+                        <li><a href="#">Tirupati Darshan</a></li>
+                        <li><a href="#">Mata Vaishno Devi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe for spiritual updates and special offers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email Address" required>
+                        <button type="button" aria-label="Subscribe"><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Divine Trails Travel. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Package Modal Container -->
+    <div id="modal-overlay" class="modal-overlay"></div>
+    <div id="package-modal" class="modal" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal"><i class="fa-solid fa-times"></i></button>
+            <div id="modal-body">
+                <!-- Modal content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- My Bookings Modal Container -->
+    <div id="bookings-modal" class="modal" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <button class="modal-close bookings-modal-close" aria-label="Close modal"><i class="fa-solid fa-times"></i></button>
+            <div class="modal-inner">
+                <div class="modal-title-row">
+                    <h2><i class="fa-solid fa-suitcase-rolling" style="color: var(--primary-color);"></i> My Bookings</h2>
+                </div>
+                <div id="bookings-modal-body">
+                    <!-- Bookings list injected via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox-modal" role="dialog" aria-modal="true">
+        <button class="lightbox-close" aria-label="Close lightbox"><i class="fa-solid fa-times"></i></button>
+        <button class="lightbox-nav-btn lightbox-prev" aria-label="Previous image"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="lightbox-nav-btn lightbox-next" aria-label="Next image"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Gallery Image">
+            <div id="lightbox-caption" class="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <!-- Floating Contact Action Widget -->
+    <div class="floating-contact-widget">
+        <button id="floating-contact-btn" class="floating-contact-btn" aria-label="Quick Contact">
+            <i class="fa-solid fa-headset"></i>
+        </button>
+        <div id="floating-contact-menu" class="floating-contact-menu">
+            <a href="tel:9372889465"><i class="fa-solid fa-phone" style="color: #25D366;"></i> Call 9372889465</a>
+            <a href="https://wa.me/919372889465?text=Hello%20Divine%20Trails,%20I%20want%20to%20inquire%20about%20a%20yatra." target="_blank"><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> WhatsApp Inquiry</a>
+            <a href="#contact"><i class="fa-solid fa-envelope" style="color: var(--primary-color);"></i> Book Online</a>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Request submitted successfully! We will contact you soon.</span>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Back to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Shared Firebase Cloud Client -->
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

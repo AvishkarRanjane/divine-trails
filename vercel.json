@@ -1,0 +1,9 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/Website/User/index.html" },
+    { "source": "/admin", "destination": "/Website/Admin/index.html" },
+    { "source": "/app", "destination": "/App/User/index.html" },
+    { "source": "/app-admin", "destination": "/App/Admin/index.html" }
+  ]
+}

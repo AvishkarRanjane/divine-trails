@@ -1,12 +1,18 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/admin/(.*)", "destination": "/Website/Admin/$1" },
     { "source": "/admin", "destination": "/Website/Admin/index.html" },
-    { "source": "/app-admin/(.*)", "destination": "/App/Admin/$1" },
+    { "source": "/admin/(.*)", "destination": "/Website/Admin/$1" },
+    { "source": "/Admin", "destination": "/Website/Admin/index.html" },
+    { "source": "/Admin/(.*)", "destination": "/Website/Admin/$1" },
     { "source": "/app-admin", "destination": "/App/Admin/index.html" },
-    { "source": "/app/(.*)", "destination": "/App/User/$1" },
+    { "source": "/app-admin/(.*)", "destination": "/App/Admin/$1" },
+    { "source": "/App-Admin", "destination": "/App/Admin/index.html" },
+    { "source": "/App-Admin/(.*)", "destination": "/App/Admin/$1" },
     { "source": "/app", "destination": "/App/User/index.html" },
+    { "source": "/app/(.*)", "destination": "/App/User/$1" },
+    { "source": "/App", "destination": "/App/User/index.html" },
+    { "source": "/App/(.*)", "destination": "/App/User/$1" },
     { "source": "/Website/(.*)", "destination": "/Website/$1" },
     { "source": "/App/(.*)", "destination": "/App/$1" },
     { "source": "/(.*)", "destination": "/Website/User/$1" }

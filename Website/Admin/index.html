@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Admin Portal Styles -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/Website/Admin/style.css">
 </head>
 <body>
 
@@ -23,106 +23,87 @@
     <header class="admin-header">
         <div class="container admin-header-content">
             <div class="brand">
-                <i class="fa-solid fa-om"></i> Divine Trails <span class="badge-admin">Admin Control Panel</span>
+                <i class="fa-solid fa-om brand-icon"></i>
+                <span class="brand-name">Divine Trails Admin</span>
+                <span class="admin-badge">Control Panel</span>
             </div>
-            
-            <div class="admin-header-actions">
-                <button id="save-live-btn" class="btn btn-save-live" onclick="openSaveLiveModal()">
+            <div class="header-actions">
+                <button id="btn-save-all" class="btn btn-primary btn-gold">
                     <i class="fa-solid fa-cloud-arrow-up"></i> Save All & Apply Live
-                    <span id="pending-changes-badge" class="badge-pending" style="display: none;">0</span>
                 </button>
-                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme">
+                <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Dark/Light Mode">
                     <i class="fa-solid fa-moon"></i>
                 </button>
-                <a href="/" class="btn btn-outline" target="_blank">
+                <a href="/Website/User/index.html" class="btn btn-outline" target="_blank">
                     <i class="fa-solid fa-globe"></i> View Live Website
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Main Admin Container -->
-    <main class="container admin-main">
-        
-        <!-- Metrics Stats Grid -->
-        <section class="metrics-grid">
-            <div class="metric-card">
-                <div class="metric-icon" style="background: rgba(255, 153, 51, 0.15); color: var(--primary-color);">
-                    <i class="fa-solid fa-om"></i>
-                </div>
-                <div>
-                    <h3 id="stat-active-packages">6</h3>
+    <main class="admin-main container">
+        <!-- Overview Stats Cards -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon icon-amber"><i class="fa-solid fa-om"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-total-packages">0</h3>
                     <p>Active Yatra Packages</p>
                 </div>
             </div>
-            <div class="metric-card">
-                <div class="metric-icon" style="background: rgba(0, 77, 64, 0.15); color: var(--secondary-color);">
-                    <i class="fa-solid fa-suitcase-rolling"></i>
-                </div>
-                <div>
+            <div class="stat-card">
+                <div class="stat-icon icon-emerald"><div class="stat-icon-inner"><i class="fa-solid fa-suitcase-rolling"></i></div></div>
+                <div class="stat-info">
                     <h3 id="stat-total-bookings">0</h3>
                     <p>Total Customer Bookings</p>
                 </div>
             </div>
-            <div class="metric-card">
-                <div class="metric-icon" style="background: rgba(46, 125, 50, 0.15); color: #2e7d32;">
-                    <i class="fa-solid fa-users"></i>
-                </div>
-                <div>
-                    <h3 id="stat-total-users">1</h3>
+            <div class="stat-card">
+                <div class="stat-icon icon-blue"><i class="fa-solid fa-users"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-total-users">0</h3>
                     <p>Registered Pilgrims</p>
                 </div>
             </div>
-            <div class="metric-card">
-                <div class="metric-icon" style="background: rgba(156, 39, 176, 0.15); color: #9c27b0;">
-                    <i class="fa-solid fa-indian-rupee-sign"></i>
-                </div>
-                <div>
-                    <h3 id="stat-revenue">₹0</h3>
+            <div class="stat-card">
+                <div class="stat-icon icon-purple"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-total-revenue">₹0</h3>
                     <p>Total Revenue Value</p>
                 </div>
             </div>
         </section>
 
         <!-- Admin Navigation Tabs -->
-        <div class="admin-tabs-bar">
-            <button class="admin-tab-btn active" onclick="switchAdminTab('packages')" id="tab-btn-packages">
-                <i class="fa-solid fa-box-archive"></i> Tour Packages
-            </button>
-            <button class="admin-tab-btn" onclick="switchAdminTab('bookings')" id="tab-btn-bookings">
-                <i class="fa-solid fa-list-check"></i> Customer Bookings
-            </button>
-            <button class="admin-tab-btn" onclick="switchAdminTab('reviews')" id="tab-btn-reviews">
-                <i class="fa-solid fa-star"></i> Reviews & Feedback
-            </button>
-        </div>
+        <nav class="admin-tabs">
+            <button class="tab-btn active" data-tab="packages"><i class="fa-solid fa-box-archive"></i> Tour Packages</button>
+            <button class="tab-btn" data-tab="bookings"><i class="fa-solid fa-list-check"></i> Customer Bookings</button>
+            <button class="tab-btn" data-tab="reviews"><i class="fa-solid fa-star"></i> Reviews & Moderation</button>
+        </nav>
 
-        <!-- TAB 1: PACKAGES MANAGEMENT -->
-        <section id="admin-tab-packages" class="admin-tab-content active">
-            <div class="section-top-bar">
+        <!-- TAB 1: Packages Manager -->
+        <section id="tab-packages" class="tab-content active">
+            <div class="toolbar">
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="pkg-search-input" placeholder="Search yatras by title, region or price...">
+                    <input type="text" id="pkg-search" placeholder="Search yatras by title, region...">
                 </div>
-                <button class="btn btn-primary" onclick="openAddPackageModal()">
+                <button id="btn-add-pkg" class="btn btn-primary btn-emerald">
                     <i class="fa-solid fa-plus"></i> Add New Package
                 </button>
             </div>
-
-            <!-- Packages Table / Cards Grid -->
-            <div id="admin-packages-grid" class="admin-pkg-grid">
-                <!-- Package Admin Cards Injected via JS -->
+            <div class="packages-grid" id="admin-packages-grid">
+                <!-- Package Cards Rendered via JS -->
             </div>
         </section>
 
-        <!-- TAB 2: BOOKINGS MANAGEMENT -->
-        <section id="admin-tab-bookings" class="admin-tab-content">
-            <div class="section-top-bar">
+        <!-- TAB 2: Bookings Manager -->
+        <section id="tab-bookings" class="tab-content">
+            <div class="section-header">
                 <h2>Customer Bookings Management</h2>
-                <span class="subtitle">Real-time synced from Website & Mobile App</span>
+                <p>Real-time synced from Website & Mobile App</p>
             </div>
-
-            <div class="table-responsive">
+            <div class="table-wrapper">
                 <table class="admin-table">
                     <thead>
                         <tr>
@@ -132,60 +113,54 @@
                             <th>Travel Date</th>
                             <th>Travelers</th>
                             <th>Contact</th>
-                            <th>Status Action</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="admin-bookings-tbody">
-                        <!-- Bookings rows injected via JS -->
+                    <tbody id="bookings-table-body">
+                        <!-- Bookings Rendered via JS -->
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- TAB 3: REVIEWS MANAGEMENT -->
-        <section id="admin-tab-reviews" class="admin-tab-content">
-            <div class="section-top-bar">
+        <!-- TAB 3: Reviews Moderation -->
+        <section id="tab-reviews" class="tab-content">
+            <div class="section-header">
                 <h2>Pilgrim Reviews Moderation</h2>
             </div>
-            <div id="admin-reviews-list" class="reviews-grid">
-                <!-- Reviews injected via JS -->
+            <div class="reviews-list" id="admin-reviews-list">
+                <!-- Reviews Rendered via JS -->
             </div>
         </section>
-
     </main>
 
-    <!-- MODAL 1: ADD / EDIT PACKAGE -->
-    <div id="pkg-modal" class="modal-overlay">
-        <div class="modal-card">
-            <button class="modal-close" onclick="closePkgModal()">&times;</button>
-            <h2 id="modal-title" style="font-family: var(--font-heading); margin-bottom: 16px;">Edit Package</h2>
-
-            <form id="pkg-form" onsubmit="handlePkgFormSubmit(event)">
-                <input type="hidden" id="form-pkg-id">
-
+    <!-- Package Editor Modal -->
+    <div id="modal-pkg" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Edit Package</h3>
+                <button class="close-btn" id="modal-close">&times;</button>
+            </div>
+            <form id="pkg-form" class="modal-form">
+                <input type="hidden" id="pkg-id">
                 <div class="form-row">
-                    <div class="form-group half">
-                        <label>Package Title</label>
-                        <input type="text" id="form-pkg-title" required placeholder="e.g. Jyotirlinga Darshan">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="pkg-title-input" required placeholder="e.g. Jyotirlinga Darshan Tour">
                     </div>
-                    <div class="form-group half">
-                        <label>Price (per person)</label>
-                        <input type="text" id="form-pkg-price" required placeholder="e.g. ₹15,000">
+                    <div class="form-group">
+                        <label>Badge Category</label>
+                        <input type="text" id="pkg-badge-input" placeholder="e.g. Best Seller">
                     </div>
                 </div>
-
                 <div class="form-row">
-                    <div class="form-group half">
-                        <label>Duration</label>
-                        <input type="text" id="form-pkg-duration" required placeholder="e.g. 4 Days / 3 Nights">
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="text" id="pkg-price-input" required placeholder="e.g. ₹15,000">
                     </div>
-                    <div class="form-group half">
-                        <label>Category</label>
-                        <select id="form-pkg-category">
-                            <option value="north">North India</option>
-                            <option value="south">South India</option>
-                            <option value="weekend">Short Tours</option>
-                        </select>
+                    <div class="form-group">
+                        <label>Duration</label>
                     </div>
                 </div>
 

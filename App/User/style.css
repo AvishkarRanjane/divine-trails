@@ -81,6 +81,7 @@ html, body {
     font-size: 16px;
     line-height: 1.4;
     user-select: none;
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
 }
 
 #app-root {
@@ -94,14 +95,20 @@ html, body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
 }
 
 /* --------------------------------------------------------------------------
    3. iOS Status Bar & Top Navigation
    -------------------------------------------------------------------------- */
 .ios-status-bar {
-    height: 44px;
-    padding: 0 20px;
+    height: calc(44px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -110,6 +117,7 @@ html, body {
     color: var(--ios-text);
     background: transparent;
     z-index: 100;
+    flex-shrink: 0;
 }
 
 .ios-status-bar .icons {
@@ -627,9 +635,9 @@ html, body {
    -------------------------------------------------------------------------- */
 .ios-tab-bar {
     position: absolute;
-    bottom: 16px;
-    left: 20px;
-    right: 20px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    left: max(20px, env(safe-area-inset-left, 0px));
+    right: max(20px, env(safe-area-inset-right, 0px));
     height: 64px;
     background: var(--ios-card-translucent);
     backdrop-filter: blur(25px) saturate(180%);

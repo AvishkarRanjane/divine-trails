@@ -1,15 +1,15 @@
 {
   "cleanUrls": true,
-  "routes": [
-    { "src": "/(?i)admin", "dest": "/Website/Admin/index.html" },
-    { "src": "/(?i)admin/(.*)", "dest": "/Website/Admin/$1" },
-    { "src": "/(?i)app-admin", "dest": "/App/Admin/index.html" },
-    { "src": "/(?i)app-admin/(.*)", "dest": "/App/Admin/$1" },
-    { "src": "/(?i)app", "dest": "/App/User/index.html" },
-    { "src": "/(?i)app/(.*)", "dest": "/App/User/$1" },
-    { "src": "/Website/(.*)", "dest": "/Website/$1" },
-    { "src": "/App/(.*)", "dest": "/App/$1" },
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/(.*)", "dest": "/Website/User/$1" }
+  "rewrites": [
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/Admin", "destination": "/admin.html" },
+    { "source": "/app", "destination": "/app.html" },
+    { "source": "/App", "destination": "/app.html" },
+    { "source": "/app-admin", "destination": "/app-admin.html" },
+    { "source": "/App-Admin", "destination": "/app-admin.html" },
+    { "source": "/Website/Admin", "destination": "/Website/Admin/index.html" },
+    { "source": "/Website/User", "destination": "/Website/User/index.html" },
+    { "source": "/App/Admin", "destination": "/App/Admin/index.html" },
+    { "source": "/App/User", "destination": "/App/User/index.html" }
   ]
 }

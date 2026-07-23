@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Divine Trails - Live Shared Firebase Cloud & Cross-Tab Sync Engine
+   Divine Trails - Shared Real-Time Cloud & Firestore Live Sync Engine
    ========================================================================== */
 
 // Live Firebase Configuration (divine-trails-4f2f4)
@@ -15,7 +15,7 @@ const firebaseConfig = {
 
 const ADMIN_EMAIL = "mr.avishkarranjane07@gmail.com";
 
-// Cross-Tab Broadcast Channel
+// Cross-Tab Local Broadcast Channel
 const liveSyncChannel = window.BroadcastChannel ? new BroadcastChannel('divine_trails_realtime_channel') : null;
 
 if (liveSyncChannel) {
@@ -34,6 +34,41 @@ if (liveSyncChannel) {
             window.dispatchEvent(new Event('divineTrailsReviewsUpdated'));
         }
     };
+}
+
+// Initialize Firebase App & Firestore Real-Time Listeners
+let db = null;
+if (window.firebase) {
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    try {
+        db = firebase.firestore();
+        
+        // Listen for live packages updates from Cloud Firestore
+        db.collection('settings').doc('packages').onSnapshot(doc => {
+            if (doc.exists && doc.data() && doc.data().list) {
+                const cloudList = doc.data().list;
+                const localList = localStorage.getItem('divineTrailsPackages');
+                if (JSON.stringify(cloudList) !== localList) {
+                    localStorage.setItem('divineTrailsPackages', JSON.stringify(cloudList));
+                    window.dispatchEvent(new Event('divineTrailsPackagesUpdated'));
+                }
+            }
+        }, err => console.log('Firestore packages listener:', err));
+
+        // Listen for live bookings updates from Cloud Firestore
+        db.collection('settings').doc('bookings').onSnapshot(doc => {
+            if (doc.exists && doc.data() && doc.data().list) {
+                const cloudBookings = doc.data().list;
+                localStorage.setItem('divineTrailsBookings', JSON.stringify(cloudBookings));
+                window.dispatchEvent(new Event('divineTrailsBookingsUpdated'));
+            }
+        }, err => console.log('Firestore bookings listener:', err));
+
+    } catch (e) {
+        console.log("Firebase Firestore initialized locally", e);
+    }
 }
 
 const defaultSeedPackages = [
@@ -219,7 +254,7 @@ window.DivineTrailsSDK = {
         return JSON.parse(stored);
     },
 
-    savePackages: function(packagesList) {
+    savePackages: async function(packagesList) {
         localStorage.setItem('divineTrailsPackages', JSON.stringify(packagesList));
         window.dispatchEvent(new Event('divineTrailsPackagesUpdated'));
 
@@ -228,6 +263,18 @@ window.DivineTrailsSDK = {
                 type: 'PACKAGES_UPDATED',
                 packages: packagesList
             });
+        }
+
+        // Push Live to Cloud Firestore
+        if (db) {
+            try {
+                await db.collection('settings').doc('packages').set({
+                    list: packagesList,
+                    updatedAt: new Date().toISOString()
+                });
+            } catch (err) {
+                console.log("Firestore cloud sync:", err);
+            }
         }
         return packagesList;
     },
@@ -301,6 +348,12 @@ window.DivineTrailsSDK = {
         if (liveSyncChannel) {
             liveSyncChannel.postMessage({ type: 'BOOKINGS_UPDATED', bookings: list });
         }
+
+        if (db) {
+            try {
+                await db.collection('settings').doc('bookings').set({ list });
+            } catch (err) {}
+        }
         return newBooking;
     },
 
@@ -315,7 +368,7 @@ window.DivineTrailsSDK = {
         return list.filter(b => b.userEmail && b.userEmail.toLowerCase() === email.toLowerCase());
     },
 
-    updateBookingStatus: function(ref, newStatus) {
+    updateBookingStatus: async function(ref, newStatus) {
         const list = this.getAllBookings();
         const booking = list.find(b => b.ref === ref);
         if (booking) {
@@ -323,6 +376,11 @@ window.DivineTrailsSDK = {
             localStorage.setItem('divineTrailsBookings', JSON.stringify(list));
             if (liveSyncChannel) {
                 liveSyncChannel.postMessage({ type: 'BOOKINGS_UPDATED', bookings: list });
+            }
+            if (db) {
+                try {
+                    await db.collection('settings').doc('bookings').set({ list });
+                } catch (err) {}
             }
         }
         return list;

@@ -35,14 +35,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function completeAuthRedirect(email) {
         const userEmail = email ? email.toLowerCase().trim() : (DivineTrailsSDK.getActiveUser() ? DivineTrailsSDK.getActiveUser().email.toLowerCase() : '');
         if (userEmail === 'mr.avishkarranjane07@gmail.com') {
-            window.location.href = '/admin';
+            window.location.href = '../Admin/index.html';
             return;
         }
 
         const pending = sessionStorage.getItem('pendingBooking');
         if (pending) {
-            window.location.href = '/#contact';
+            window.location.href = 'index.html#contact';
         } else {
+            window.location.href = 'index.html';
+        }
+    }
             window.location.href = '/';
         }
     }

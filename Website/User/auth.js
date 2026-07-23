@@ -31,22 +31,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return usersStr ? JSON.parse(usersStr) : [];
     }
 
-    // Helper: Redirect back after auth
+    // Helper: Redirect after login based on email
     function completeAuthRedirect(email) {
-        const userEmail = email ? email.toLowerCase().trim() : (DivineTrailsSDK.getActiveUser() ? DivineTrailsSDK.getActiveUser().email.toLowerCase() : '');
+        const userEmail = email ? email.toLowerCase().trim() : '';
+
+        // Admin email → redirect to Admin Panel
         if (userEmail === 'mr.avishkarranjane07@gmail.com') {
-            window.location.href = '../Admin/index.html';
+            window.location.href = '/Website/Admin/index.html';
             return;
         }
 
+        // Regular user → go back to homepage or pending booking
         const pending = sessionStorage.getItem('pendingBooking');
         if (pending) {
-            window.location.href = 'index.html#contact';
+            window.location.href = '/Website/User/index.html#contact';
         } else {
-            window.location.href = 'index.html';
-        }
-    }
-            window.location.href = '/';
+            window.location.href = '/Website/User/index.html';
         }
     }
 
@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (existingUser) {
                 userName = existingUser.name;
             } else {
-                // Extract clean name from email prefix if not pre-registered
                 const prefix = email.split('@')[0];
                 userName = prefix.charAt(0).toUpperCase() + prefix.slice(1);
             }
@@ -93,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (name && email && pass.length >= 6) {
             const registeredUsers = getRegisteredUsers();
             
-            // Avoid duplicate email registration in local DB
             const existingIndex = registeredUsers.findIndex(u => u.email.toLowerCase() === email.toLowerCase());
             if (existingIndex >= 0) {
                 registeredUsers[existingIndex] = { name, email, pass };
@@ -103,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             localStorage.setItem('divineTrailsUsers', JSON.stringify(registeredUsers));
             
-            // Set active user session
             const user = { name: name, email: email };
             localStorage.setItem('divineTrailsUser', JSON.stringify(user));
             
@@ -134,7 +131,6 @@ window.mockSocialLogin = function(provider) {
     const user = { name: provider + " Traveler", email: 'traveler@example.com' };
     localStorage.setItem('divineTrailsUser', JSON.stringify(user));
     
-    // Find visible form to show loading state
     const activeForm = document.querySelector('.auth-form.active');
     if (activeForm) {
         const btns = activeForm.querySelectorAll('.social-btn');
@@ -148,9 +144,9 @@ window.mockSocialLogin = function(provider) {
     setTimeout(() => {
         const pending = sessionStorage.getItem('pendingBooking');
         if (pending) {
-            window.location.href = 'index.html#contact';
+            window.location.href = '/Website/User/index.html#contact';
         } else {
-            window.location.href = 'index.html';
+            window.location.href = '/Website/User/index.html';
         }
     }, 800);
 };

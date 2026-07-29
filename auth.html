@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication - Divine Trails</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #004D40 0%, #00221A 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            padding: 20px;
+        }
+        .auth-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 440px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .auth-header {
+            background: #004D40;
+            color: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .auth-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 14px;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .auth-tab.active {
+            color: #FF9933;
+            border-bottom-color: #FF9933;
+        }
+        .auth-body {
+            padding: 24px;
+        }
+        .auth-form {
+            display: none;
+        }
+        .auth-form.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #333;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .form-group input:focus {
+            border-color: #FF9933;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: #FF9933;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .btn-submit:hover {
+            background: #E68A00;
+        }
+        .error-box {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            display: none;
+        }
+        .error-box.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2><i class="fa-solid fa-om" style="color: #FF9933;"></i> Divine Trails</h2>
+            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin:0;">Login or register for sacred yatra bookings.</p>
+        </div>
+        <div class="auth-tabs">
+            <button id="tab-login" class="auth-tab active">Login</button>
+            <button id="tab-signup" class="auth-tab">Sign Up</button>
+        </div>
+        <div class="auth-body">
+            <div id="login-error" class="error-box"></div>
+
+            <!-- Login Form -->
+            <form id="form-login" class="auth-form active">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" placeholder="pilgrim@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-pass">Password</label>
+                    <input type="password" id="login-pass" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-submit">Login</button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="form-signup" class="auth-form">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" placeholder="Ramesh Sharma" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" placeholder="pilgrim@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-pass">Password (Min 6 chars)</label>
+                    <input type="password" id="signup-pass" placeholder="••••••••" required minlength="6">
+                </div>
+                <button type="submit" class="btn-submit">Create Account</button>
+            </form>
+
+            <div style="text-align: center; margin-top: 16px;">
+                <a href="/" style="color: #004D40; text-decoration: none; font-size: 0.9rem;">← Back to Main Site</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/pages/auth.js"></script>
+</body>
+</html>

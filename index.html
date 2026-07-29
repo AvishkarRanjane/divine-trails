@@ -1,2 +1,244 @@
 <!DOCTYPE html>
-<html><head><script>window.location.replace('/');</script></head><body></body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divine Trails Travel | Sacred Temple Tours</title>
+    <meta name="description" content="Premium temple tour packages in India. Book your spiritual journey with Divine Trails Travel.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-om"></i> Divine Trails
+            </a>
+            
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#packages">Packages</a></li>
+                    <li><a href="#destinations">Destinations</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#contact">Book Tour</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <div id="user-nav-container">
+                    <a href="/auth.html" id="auth-btn" class="btn btn-outline" style="padding: 6px 16px; font-size: 0.9rem; margin-right: 8px;">Login / Sign Up</a>
+                </div>
+                <button id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="navbar-backdrop" class="navbar-backdrop"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Sacred Temple Tours & Pilgrimages</h1>
+                <p>Discover India's holy shrines with comfortable travel, VIP darshans, expert guides, and seamless real-time booking.</p>
+                <div class="hero-btns">
+                    <a href="#packages" class="btn btn-primary"><i class="fa-solid fa-compass"></i> Explore Packages</a>
+                    <a href="#contact" class="btn btn-outline"><i class="fa-solid fa-calendar-check"></i> Quick Booking</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span>50+</span>
+                        <p>Sacred Shrines</p>
+                    </div>
+                    <div class="stat-item">
+                        <span>10,000+</span>
+                        <p>Happy Pilgrims</p>
+                    </div>
+                    <div class="stat-item">
+                        <span>4.9 ★</span>
+                        <p>Rating</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Packages Section -->
+        <section id="packages" class="section-padding bg-light">
+            <div class="container">
+                <div class="section-heading text-center">
+                    <span class="subtitle">Pilgrimage Destinations</span>
+                    <h2>Featured Yatra Packages</h2>
+                    <p class="heading-desc">Select from our meticulously planned temple tour packages across holy destinations in India.</p>
+                </div>
+
+                <!-- Search & Filters -->
+                <div class="package-controls-wrapper">
+                    <div class="package-search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="package-search" placeholder="Search by temple, city, or state (e.g. Kedarnath, Varanasi)...">
+                    </div>
+                    <div class="package-sort-box">
+                        <select id="package-sort">
+                            <option value="featured">Featured Packages</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Top Rated</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="package-filters">
+                    <button class="filter-btn active" data-filter="all">All Yatras</button>
+                    <button class="filter-btn" data-filter="Popular">Popular</button>
+                    <button class="filter-btn" data-filter="Sacred">Sacred Shrines</button>
+                    <button class="filter-btn" data-filter="VIP Darshan">VIP Darshan</button>
+                </div>
+
+                <div id="packages-container" class="packages-grid">
+                    <!-- Packages rendered via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews & Testimonials Section -->
+        <section id="testimonials" class="section-padding">
+            <div class="container">
+                <div class="section-heading text-center">
+                    <span class="subtitle">Devotee Stories</span>
+                    <h2>Pilgrim Reviews & Feedback</h2>
+                </div>
+                <div id="reviews-container" class="testimonial-slider">
+                    <!-- Reviews rendered via JS -->
+                </div>
+
+                <div style="margin-top: 40px;" class="feedback-container">
+                    <h3 class="text-center" style="margin-bottom:12px;">Leave a Devotee Review</h3>
+                    <form id="feedback-form" class="feedback-form">
+                        <div class="star-rating">
+                            <i class="fa-solid fa-star active" data-value="1"></i>
+                            <i class="fa-solid fa-star active" data-value="2"></i>
+                            <i class="fa-solid fa-star active" data-value="3"></i>
+                            <i class="fa-solid fa-star active" data-value="4"></i>
+                            <i class="fa-solid fa-star active" data-value="5"></i>
+                        </div>
+                        <textarea id="feedback-text" rows="3" placeholder="Share your yatra experience with us..." required></textarea>
+                        <button type="submit" class="btn btn-primary full-width">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Booking Section -->
+        <section id="contact" class="section-padding bg-light">
+            <div class="container">
+                <div class="contact-grid">
+                    <div>
+                        <div class="section-heading left-align">
+                            <span class="subtitle">Get In Touch</span>
+                            <h2>Book Your Divine Journey</h2>
+                            <p>Fill out the form to reserve your seats or inquire about custom yatra packages.</p>
+                        </div>
+                        <div class="info-items">
+                            <div class="info-item">
+                                <i class="fa-solid fa-phone"></i>
+                                <div>
+                                    <h4>Phone / WhatsApp</h4>
+                                    <p>+91 93728 89465</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fa-solid fa-envelope"></i>
+                                <div>
+                                    <h4>Email Inquiry</h4>
+                                    <p>contact@divinetrails.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form">
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="booking-pkg-title">Package Name</label>
+                                <input type="text" id="booking-pkg-title" placeholder="Kedarnath Temple Yatra" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label for="booking-name">Full Name</label>
+                                    <input type="text" id="booking-name" placeholder="Ramesh Sharma" required>
+                                </div>
+                                <div class="form-group half">
+                                    <label for="booking-email">Email Address</label>
+                                    <input type="email" id="booking-email" placeholder="ramesh@example.com" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label for="booking-phone">Phone Number</label>
+                                    <input type="tel" id="booking-phone" placeholder="+91 9876543210" required>
+                                </div>
+                                <div class="form-group half">
+                                    <label for="booking-travelers">Travelers</label>
+                                    <select id="booking-travelers">
+                                        <option value="1">1 Person</option>
+                                        <option value="2">2 Persons</option>
+                                        <option value="3">3-5 Persons</option>
+                                        <option value="6+">Group (6+)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-date">Preferred Travel Date</label>
+                                <input type="date" id="booking-date">
+                            </div>
+                            <button type="submit" class="btn btn-primary full-width"><i class="fa-solid fa-paper-plane"></i> Confirm Booking Request</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay"></div>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="modal">
+        <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+        <h2>Book Yatra Package</h2>
+        <p>Complete your booking details below.</p>
+    </div>
+
+    <!-- User Bookings Modal -->
+    <div id="user-bookings-modal" class="modal">
+        <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+        <h2><i class="fa-solid fa-suitcase" style="color:var(--primary-color);"></i> My Bookings</h2>
+        <div id="user-bookings-body"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Request submitted successfully!</span>
+    </div>
+
+    <!-- Main Module script for Vite -->
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

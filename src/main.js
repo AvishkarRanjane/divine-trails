@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initBookingForm();
   initReviewsForm();
   initLightbox();
+  initFAQ();
+  initFloatingWidget();
 });
 
 // Theme switcher
@@ -419,4 +421,38 @@ function escapeHtml(str) {
   return str.replace(/[&<>"']/g, (m) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
   })[m]);
+}
+
+function initFAQ() {
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
+  accordionHeaders.forEach(header => {
+    header.addEventListener('click', () => {
+      const content = header.nextElementSibling;
+      const isOpen = header.classList.contains('active');
+
+      document.querySelectorAll('.accordion-header').forEach(h => {
+        h.classList.remove('active');
+        if (h.nextElementSibling) h.nextElementSibling.style.maxHeight = null;
+      });
+
+      if (!isOpen && content) {
+        header.classList.add('active');
+        content.style.maxHeight = content.scrollHeight + 'px';
+      }
+    });
+  });
+}
+
+function initFloatingWidget() {
+  const btn = document.getElementById('floating-contact-btn');
+  const menu = document.getElementById('floating-contact-menu');
+
+  btn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menu?.classList.toggle('show');
+  });
+
+  document.addEventListener('click', () => {
+    menu?.classList.remove('show');
+  });
 }

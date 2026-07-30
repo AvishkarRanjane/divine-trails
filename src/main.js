@@ -315,12 +315,12 @@ function renderPackages(list) {
 
   container.innerHTML = list.map(pkg => `
     <div class="package-card" data-id="${pkg.id}">
-      <div class="package-img-wrapper">
+      <div class="package-img-wrapper btn-card-details" data-id="${pkg.id}">
         <img src="${pkg.image}" alt="${escapeHtml(pkg.title)}" loading="lazy">
         ${pkg.badge ? `<span class="package-badge">${escapeHtml(pkg.badge)}</span>` : ''}
       </div>
       <div class="package-content">
-        <h3 class="package-title">${escapeHtml(pkg.title)}</h3>
+        <h3 class="package-title btn-card-details" data-id="${pkg.id}" style="cursor:pointer;">${escapeHtml(pkg.title)}</h3>
         <div class="package-info-grid">
           <div class="package-info-item"><i class="fa-solid fa-location-dot"></i> ${escapeHtml(pkg.location)}</div>
           <div class="package-info-item"><i class="fa-regular fa-clock"></i> ${escapeHtml(pkg.duration)}</div>
@@ -330,13 +330,25 @@ function renderPackages(list) {
         <p style="font-size:0.9rem; color:var(--text-2); margin-bottom:14px;">${escapeHtml(pkg.description || '')}</p>
         <div class="package-footer">
           <div class="package-price">${escapeHtml(pkg.price)} <span>/ person</span></div>
-          <button class="btn btn-primary btn-book-pkg" data-id="${pkg.id}" style="padding:10px 22px; font-size:0.88rem;">Book Now</button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-outline btn-view-details" data-id="${pkg.id}" style="padding:8px 14px; font-size:0.82rem;">Details</button>
+            <button class="btn btn-primary btn-book-pkg" data-id="${pkg.id}" style="padding:8px 16px; font-size:0.82rem;">Book Now</button>
+          </div>
         </div>
       </div>
     </div>
   `).join('');
 
-  // "Book Now" → pre-fill contact form & scroll to it
+  // "View Details" click
+  container.querySelectorAll('.btn-view-details, .btn-card-details').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const id = e.currentTarget.getAttribute('data-id');
+      const found = packagesList.find(p => p.id === id);
+      if (found) openPackageDetailsModal(found);
+    });
+  });
+
+  // "Book Now" click → pre-fill contact form & scroll
   container.querySelectorAll('.btn-book-pkg').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.getAttribute('data-id');
@@ -350,6 +362,155 @@ function renderPackages(list) {
       }
     });
   });
+}
+
+/* ========================================================================
+   PACKAGE DETAILS MODAL (Detailed Path, Itinerary, Spots, Inclusions)
+   ======================================================================== */
+function openPackageDetailsModal(pkg) {
+  selectedPackage = pkg;
+  const modal = document.getElementById('pkg-details-modal');
+  const overlay = document.getElementById('modal-overlay');
+  const body = document.getElementById('pkg-details-body');
+
+  if (!modal || !body) return;
+
+  const itineraryList = pkg.itinerary || [];
+  const inclusionsList = pkg.inclusions || [
+    "Special VIP Darshan Assistance",
+    "Deluxe Hotel Stay (Double/Triple Sharing)",
+    "Pure Veg Sattvic Breakfast & Dinner",
+    "AC Vehicle Transfers & Sightseeing",
+    "Experienced Pilgrim Guide Support"
+  ];
+
+  body.innerHTML = `
+    <div class="pkg-modal-header">
+      <img src="${pkg.image}" alt="${escapeHtml(pkg.title)}" class="pkg-modal-banner">
+      ${pkg.badge ? `<span class="package-badge" style="top:16px; left:16px;">${escapeHtml(pkg.badge)}</span>` : ''}
+    </div>
+
+    <div class="pkg-modal-content">
+      <div class="pkg-modal-title-row">
+        <div>
+          <h2>${escapeHtml(pkg.title)}</h2>
+          <p class="pkg-modal-location"><i class="fa-solid fa-location-dot" style="color:var(--primary);"></i> ${escapeHtml(pkg.location)}</p>
+        </div>
+        <div class="pkg-modal-price-box">
+          <div class="pkg-modal-price">${escapeHtml(pkg.price)}</div>
+          <small style="color:var(--text-3);">per person</small>
+        </div>
+      </div>
+
+      <!-- Quick Highlights Ribbon -->
+      <div class="pkg-modal-ribbon">
+        <div class="ribbon-item">
+          <i class="fa-regular fa-clock"></i>
+          <div>
+            <strong>Duration</strong>
+            <span>${escapeHtml(pkg.duration)}</span>
+          </div>
+        </div>
+        <div class="ribbon-item">
+          <i class="fa-solid fa-map-pin"></i>
+          <div>
+            <strong>Spots Covered</strong>
+            <span>${escapeHtml(pkg.totalSpots || 'Multiple Shrines')}</span>
+          </div>
+        </div>
+        <div class="ribbon-item">
+          <i class="fa-solid fa-users"></i>
+          <div>
+            <strong>Group Size</strong>
+            <span>${escapeHtml(pkg.groupSize || 'Flexible')}</span>
+          </div>
+        </div>
+        <div class="ribbon-item">
+          <i class="fa-solid fa-utensils"></i>
+          <div>
+            <strong>Meals</strong>
+            <span>${escapeHtml(pkg.meals || 'Pure Veg Sattvic')}</span>
+          </div>
+        </div>
+        <div class="ribbon-item">
+          <i class="fa-solid fa-bus"></i>
+          <div>
+            <strong>Transport</strong>
+            <span>${escapeHtml(pkg.transport || 'AC Vehicle')}</span>
+          </div>
+        </div>
+        <div class="ribbon-item">
+          <i class="fa-solid fa-ticket"></i>
+          <div>
+            <strong>VIP Darshan</strong>
+            <span>${escapeHtml(pkg.vipEntry || 'Included')}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tour Overview -->
+      <div class="pkg-modal-section">
+        <h3><i class="fa-solid fa-circle-info" style="color:var(--primary);"></i> Tour Overview</h3>
+        <p style="font-size:0.96rem; line-height:1.7; color:var(--text-2);">${escapeHtml(pkg.description || '')}</p>
+      </div>
+
+      <!-- Day by Day Path / Itinerary -->
+      <div class="pkg-modal-section">
+        <h3><i class="fa-solid fa-route" style="color:var(--primary);"></i> Complete Yatra Path & Itinerary</h3>
+        <div class="itinerary-timeline">
+          ${itineraryList.map((item, idx) => {
+            const isObj = typeof item === 'object';
+            const dayLabel = isObj ? item.day : `Day ${idx + 1}`;
+            const titleText = isObj ? item.title : item;
+            const descText = isObj ? item.desc : '';
+            return `
+              <div class="timeline-step">
+                <div class="step-badge">${escapeHtml(dayLabel)}</div>
+                <div class="step-content">
+                  <h4>${escapeHtml(titleText)}</h4>
+                  ${descText ? `<p>${escapeHtml(descText)}</p>` : ''}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+
+      <!-- Inclusions -->
+      <div class="pkg-modal-section">
+        <h3><i class="fa-solid fa-circle-check" style="color:#2E7D32;"></i> Package Inclusions</h3>
+        <ul class="inclusions-grid">
+          ${inclusionsList.map(inc => `
+            <li><i class="fa-solid fa-check" style="color:#2E7D32;"></i> ${escapeHtml(inc)}</li>
+          `).join('')}
+        </ul>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="pkg-modal-action-bar">
+        <div>
+          <span style="font-size:0.85rem; color:var(--text-3);">Starting from</span>
+          <div style="font-size:1.5rem; font-weight:700; color:var(--secondary);">${escapeHtml(pkg.price)}</div>
+        </div>
+        <button class="btn btn-primary btn-modal-book" style="padding: 12px 28px; font-size:0.95rem;">
+          <i class="fa-solid fa-calendar-check"></i> Book This Yatra
+        </button>
+      </div>
+    </div>
+  `;
+
+  openModal(modal, overlay);
+
+  // CTA button in modal
+  const ctaBtn = body.querySelector('.btn-modal-book');
+  if (ctaBtn) {
+    ctaBtn.addEventListener('click', () => {
+      closeModals();
+      const pkgTitleInput = document.getElementById('booking-pkg-title');
+      if (pkgTitleInput) pkgTitleInput.value = pkg.title;
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
 }
 
 /* ========================================================================

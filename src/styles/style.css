@@ -2177,3 +2177,208 @@ body {
 [data-theme="dark"] .package-price {
   color: #FF9933;
 }
+
+/* ========================================================================
+   PACKAGE DETAILS MODAL STYLES
+   ======================================================================== */
+.pkg-details-modal {
+  max-width: 820px !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+}
+
+.pkg-modal-header {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+}
+
+.pkg-modal-banner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pkg-modal-content {
+  padding: 28px;
+  max-height: calc(88vh - 280px);
+  overflow-y: auto;
+}
+
+.pkg-modal-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.pkg-modal-title-row h2 {
+  font-size: 1.6rem;
+  margin-bottom: 4px;
+}
+
+.pkg-modal-location {
+  font-size: 0.95rem;
+  color: var(--text-2);
+}
+
+.pkg-modal-price-box {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.pkg-modal-price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--secondary);
+  font-family: var(--font-heading);
+}
+
+.pkg-modal-ribbon {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 14px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 28px;
+}
+
+.ribbon-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ribbon-item i {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  box-shadow: var(--shadow-xs);
+  flex-shrink: 0;
+}
+
+.ribbon-item strong {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ribbon-item span {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.pkg-modal-section {
+  margin-bottom: 28px;
+}
+
+.pkg-modal-section h3 {
+  font-size: 1.15rem;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Timeline Path */
+.itinerary-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  padding-left: 12px;
+}
+
+.itinerary-timeline::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 36px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--primary), var(--border));
+}
+
+.timeline-step {
+  display: flex;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-step .step-badge {
+  padding: 6px 12px;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  align-self: flex-start;
+  box-shadow: 0 2px 8px rgba(255, 153, 51, 0.3);
+}
+
+.timeline-step .step-content {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  flex: 1;
+}
+
+.timeline-step .step-content h4 {
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+  color: var(--text-1);
+}
+
+.timeline-step .step-content p {
+  font-size: 0.88rem;
+  color: var(--text-2);
+  margin: 0;
+}
+
+/* Inclusions Grid */
+.inclusions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.inclusions-grid li {
+  font-size: 0.9rem;
+  color: var(--text-1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Action Bar */
+.pkg-modal-action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .pkg-modal-header { height: 200px; }
+  .pkg-modal-title-row { flex-direction: column; gap: 8px; }
+  .pkg-modal-price-box { text-align: left; }
+  .pkg-modal-action-bar { flex-direction: column; gap: 16px; align-items: stretch; text-align: center; }
+}

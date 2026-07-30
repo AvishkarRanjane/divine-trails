@@ -456,8 +456,27 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="pkg-form-image">Image URL</label>
-                <input type="url" id="pkg-form-image" placeholder="https://images.unsplash.com/..." required>
+                <label>Package Image</label>
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                    <button type="button" id="btn-mode-url" class="btn-action active" style="flex:1;"><i class="fa-solid fa-link"></i> Paste Image URL</button>
+                    <button type="button" id="btn-mode-file" class="btn-action" style="flex:1;"><i class="fa-solid fa-upload"></i> Upload Image File</button>
+                </div>
+                
+                <!-- URL Input Mode -->
+                <div id="img-input-url-box">
+                    <input type="text" id="pkg-form-image" placeholder="Paste image URL (e.g. /assets/images/... or https://...)">
+                </div>
+
+                <!-- File Input Mode -->
+                <div id="img-input-file-box" style="display:none;">
+                    <input type="file" id="pkg-form-image-file" accept="image/*" style="padding:10px; border:1px dashed #FF9933; background:#FFFDF9; border-radius:8px; cursor:pointer; width:100%;">
+                </div>
+
+                <!-- Live Preview -->
+                <div id="pkg-img-preview-container" style="margin-top:12px; display:none; align-items:center; gap:12px; background:#F8F5EE; padding:10px 14px; border-radius:8px; border:1px solid #E5E0D5;">
+                    <img id="pkg-img-preview" src="" alt="Preview" style="width:70px; height:50px; object-fit:cover; border-radius:6px;">
+                    <span style="font-size:0.85rem; color:#555; font-weight:500;">Live Image Preview</span>
+                </div>
             </div>
             <div class="form-row">
                 <div class="form-group">

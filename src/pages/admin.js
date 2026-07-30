@@ -232,6 +232,56 @@ function initPackageModal() {
   const btnAdd = document.getElementById('btn-add-package');
   btnAdd?.addEventListener('click', () => openPackageFormModal(null));
 
+  const btnModeUrl = document.getElementById('btn-mode-url');
+  const btnModeFile = document.getElementById('btn-mode-file');
+  const boxUrl = document.getElementById('img-input-url-box');
+  const boxFile = document.getElementById('img-input-file-box');
+  const inputUrl = document.getElementById('pkg-form-image');
+  const inputFile = document.getElementById('pkg-form-image-file');
+  const previewContainer = document.getElementById('pkg-img-preview-container');
+  const previewImg = document.getElementById('pkg-img-preview');
+
+  // Mode switching
+  btnModeUrl?.addEventListener('click', () => {
+    btnModeUrl.classList.add('active');
+    btnModeFile?.classList.remove('active');
+    if (boxUrl) boxUrl.style.display = 'block';
+    if (boxFile) boxFile.style.display = 'none';
+  });
+
+  btnModeFile?.addEventListener('click', () => {
+    btnModeFile.classList.add('active');
+    btnModeUrl?.classList.remove('active');
+    if (boxFile) boxFile.style.display = 'block';
+    if (boxUrl) boxUrl.style.display = 'none';
+  });
+
+  // URL input live preview
+  inputUrl?.addEventListener('input', () => {
+    const val = inputUrl.value.trim();
+    if (val) {
+      if (previewImg) previewImg.src = val;
+      if (previewContainer) previewContainer.style.display = 'flex';
+    } else {
+      if (previewContainer) previewContainer.style.display = 'none';
+    }
+  });
+
+  // File upload live preview & base64 reader
+  inputFile?.addEventListener('change', (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target.result;
+        if (inputUrl) inputUrl.value = dataUrl;
+        if (previewImg) previewImg.src = dataUrl;
+        if (previewContainer) previewContainer.style.display = 'flex';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
   const form = document.getElementById('admin-package-form');
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -240,7 +290,7 @@ function initPackageModal() {
     const location = document.getElementById('pkg-form-location').value.trim();
     const price = document.getElementById('pkg-form-price').value.trim();
     const duration = document.getElementById('pkg-form-duration').value.trim();
-    const image = document.getElementById('pkg-form-image').value.trim();
+    const image = inputUrl ? inputUrl.value.trim() || '/assets/images/pkg_chardham_1782374096140.png' : '/assets/images/pkg_chardham_1782374096140.png';
     const badge = document.getElementById('pkg-form-badge').value.trim();
     const groupSize = document.getElementById('pkg-form-group')?.value.trim() || '12-15 Pilgrims';
     const description = document.getElementById('pkg-form-desc')?.value.trim() || '';
@@ -271,6 +321,10 @@ function openPackageFormModal(pkg) {
   const modal = document.getElementById('admin-pkg-modal');
   const overlay = document.getElementById('modal-overlay');
   const titleEl = document.getElementById('admin-pkg-modal-title');
+  const inputUrl = document.getElementById('pkg-form-image');
+  const previewContainer = document.getElementById('pkg-img-preview-container');
+  const previewImg = document.getElementById('pkg-img-preview');
+  const inputFile = document.getElementById('pkg-form-image-file');
 
   if (titleEl) titleEl.innerText = pkg ? 'Edit Yatra Package' : 'Add New Yatra Package';
 
@@ -279,10 +333,19 @@ function openPackageFormModal(pkg) {
   document.getElementById('pkg-form-location').value = pkg ? pkg.location : '';
   document.getElementById('pkg-form-price').value = pkg ? pkg.price : '';
   document.getElementById('pkg-form-duration').value = pkg ? pkg.duration : '';
-  document.getElementById('pkg-form-image').value = pkg ? pkg.image : '';
+  if (inputUrl) inputUrl.value = pkg ? pkg.image : '';
+  if (inputFile) inputFile.value = '';
   document.getElementById('pkg-form-badge').value = pkg ? pkg.badge || '' : '';
   if (document.getElementById('pkg-form-group')) document.getElementById('pkg-form-group').value = pkg ? pkg.groupSize || '' : '';
   if (document.getElementById('pkg-form-desc')) document.getElementById('pkg-form-desc').value = pkg ? pkg.description || '' : '';
+
+  // Show live preview if editing an existing package
+  if (pkg && pkg.image) {
+    if (previewImg) previewImg.src = pkg.image;
+    if (previewContainer) previewContainer.style.display = 'flex';
+  } else {
+    if (previewContainer) previewContainer.style.display = 'none';
+  }
 
   modal?.classList.add('active');
   overlay?.classList.add('active');

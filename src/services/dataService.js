@@ -4,7 +4,9 @@ import {
   collection, 
   onSnapshot, 
   setDoc, 
-  addDoc, 
+  addDoc,
+  updateDoc,
+  deleteDoc,
   serverTimestamp 
 } from 'firebase/firestore';
 
@@ -111,10 +113,11 @@ export const createBooking = async (bookingData) => {
   localStorage.setItem('divineTrailsBookings', JSON.stringify(current));
 
   try {
-    await addDoc(collection(db, 'bookings'), {
+    const docRef = await addDoc(collection(db, 'bookings'), {
       ...newBooking,
       timestamp: serverTimestamp(),
     });
+    newBooking.docId = docRef.id;
   } catch (err) {
     console.warn('Cloud booking sync failed:', err);
   }
@@ -122,11 +125,43 @@ export const createBooking = async (bookingData) => {
   return newBooking;
 };
 
+export const updateBookingStatus = async (docIdOrId, newStatus) => {
+  const bookings = getBookings();
+  const idx = bookings.findIndex(b => b.docId === docIdOrId || b.id === docIdOrId);
+  if (idx >= 0) {
+    bookings[idx].status = newStatus;
+    localStorage.setItem('divineTrailsBookings', JSON.stringify(bookings));
+  }
+
+  try {
+    if (docIdOrId) {
+      const bDocRef = doc(db, 'bookings', docIdOrId);
+      await updateDoc(bDocRef, { status: newStatus });
+    }
+  } catch (err) {
+    console.warn('Cloud booking status update warning:', err);
+  }
+};
+
+export const deleteBooking = async (docIdOrId) => {
+  const bookings = getBookings().filter(b => b.docId !== docIdOrId && b.id !== docIdOrId);
+  localStorage.setItem('divineTrailsBookings', JSON.stringify(bookings));
+
+  try {
+    if (docIdOrId) {
+      const bDocRef = doc(db, 'bookings', docIdOrId);
+      await deleteDoc(bDocRef);
+    }
+  } catch (err) {
+    console.warn('Cloud booking deletion warning:', err);
+  }
+};
+
 export const subscribeBookings = (callback) => {
   const bookingsCol = collection(db, 'bookings');
   return onSnapshot(bookingsCol, (snapshot) => {
     const cloudBookings = [];
-    snapshot.forEach(doc => cloudBookings.push({ docId: doc.id, ...doc.data() }));
+    snapshot.forEach(docSnap => cloudBookings.push({ docId: docSnap.id, ...docSnap.data() }));
     if (cloudBookings.length > 0) {
       localStorage.setItem('divineTrailsBookings', JSON.stringify(cloudBookings));
       callback(cloudBookings);
@@ -177,10 +212,42 @@ export const addReview = async (reviewData) => {
   localStorage.setItem('divineTrailsReviews', JSON.stringify(reviews));
 
   try {
-    await addDoc(collection(db, 'reviews'), newRev);
+    const docRef = await addDoc(collection(db, 'reviews'), newRev);
+    newRev.docId = docRef.id;
   } catch (err) {
     console.warn('Cloud review sync warning:', err);
   }
 
   return newRev;
+};
+
+export const deleteReview = async (docIdOrId) => {
+  const reviews = getReviews().filter(r => r.docId !== docIdOrId && r.id !== docIdOrId);
+  localStorage.setItem('divineTrailsReviews', JSON.stringify(reviews));
+
+  try {
+    if (docIdOrId) {
+      const rDocRef = doc(db, 'reviews', docIdOrId);
+      await deleteDoc(rDocRef);
+    }
+  } catch (err) {
+    console.warn('Cloud review deletion warning:', err);
+  }
+};
+
+export const subscribeReviews = (callback) => {
+  const reviewsCol = collection(db, 'reviews');
+  return onSnapshot(reviewsCol, (snapshot) => {
+    const cloudReviews = [];
+    snapshot.forEach(docSnap => cloudReviews.push({ docId: docSnap.id, ...docSnap.data() }));
+    if (cloudReviews.length > 0) {
+      localStorage.setItem('divineTrailsReviews', JSON.stringify(cloudReviews));
+      callback(cloudReviews);
+    } else {
+      callback(getReviews());
+    }
+  }, (err) => {
+    console.warn('Reviews sync error:', err);
+    callback(getReviews());
+  });
 };

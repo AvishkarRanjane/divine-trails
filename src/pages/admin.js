@@ -5,20 +5,30 @@ import {
   savePackagesToCloud, 
   subscribePackages, 
   getBookings, 
-  subscribeBookings 
+  subscribeBookings,
+  updateBookingStatus,
+  deleteBooking,
+  getReviews,
+  subscribeReviews,
+  deleteReview
 } from '../services/dataService.js';
 
 let packages = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   const user = getCurrentUser();
+
+  // Strict Admin Guard: Only admin email can access admin panel
   if (!isAdminUser(user)) {
-    alert('Access Denied: Admin authorization required.');
+    alert('Access Denied: Admin authorization required (mr.avishkarranjane07@gmail.com).');
     window.location.href = '/auth.html';
     return;
   }
 
-  initTheme();
+  // Display Admin Email
+  const adminEmailEl = document.getElementById('admin-user-email');
+  if (adminEmailEl && user) adminEmailEl.innerText = user.email;
+
   loadData();
   initTabSwitching();
   initPackageModal();
@@ -29,26 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-function initTheme() {
-  const toggleBtn = document.getElementById('theme-toggle');
-  const root = document.documentElement;
-  const saved = localStorage.getItem('divineTrailsTheme') || 'light';
-  root.setAttribute('data-theme', saved);
-
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('divineTrailsTheme', next);
-    });
-  }
-}
-
 function loadData() {
   packages = getPackages();
   renderMetrics();
   renderPackagesList();
   renderBookingsTable();
+  renderReviewsTable();
 
   subscribePackages((list) => {
     packages = list;
@@ -60,23 +56,33 @@ function loadData() {
     renderMetrics();
     renderBookingsTable();
   });
+
+  subscribeReviews(() => {
+    renderMetrics();
+    renderReviewsTable();
+  });
 }
 
 function renderMetrics() {
   const bookings = getBookings();
+  const reviews = getReviews();
 
   const elActive = document.getElementById('stat-active-packages');
   const elBookings = document.getElementById('stat-total-bookings');
   const elRev = document.getElementById('stat-revenue');
+  const elTotalRev = document.getElementById('stat-total-reviews');
 
   if (elActive) elActive.innerText = packages.length;
   if (elBookings) elBookings.innerText = bookings.length;
+  if (elTotalRev) elTotalRev.innerText = reviews.length;
 
   let revenue = 0;
   bookings.forEach(b => {
-    const pkg = packages.find(p => p.title === b.packageName);
-    const val = pkg ? parseInt(pkg.price.replace(/[^\d]/g, ''), 10) || 15000 : 15000;
-    revenue += val * (parseInt(b.travelers, 10) || 1);
+    if (b.status !== 'Cancelled') {
+      const pkg = packages.find(p => p.title === b.packageName);
+      const val = pkg ? parseInt(pkg.price.replace(/[^\d]/g, ''), 10) || 15000 : 15000;
+      revenue += val * (parseInt(b.travelers, 10) || 1);
+    }
   });
 
   if (elRev) elRev.innerText = '₹' + revenue.toLocaleString('en-IN');
@@ -88,13 +94,14 @@ function renderPackagesList() {
 
   tableBody.innerHTML = packages.map(pkg => `
     <tr>
-      <td><img src="${pkg.image}" style="width:48px; height:48px; border-radius:8px; object-fit:cover;"></td>
-      <td><strong>${escapeHtml(pkg.title)}</strong><br><small>${escapeHtml(pkg.location)}</small></td>
-      <td>${escapeHtml(pkg.price)}</td>
+      <td><img src="${pkg.image}" alt="${escapeHtml(pkg.title)}" style="width:48px; height:48px; border-radius:8px; object-fit:cover;"></td>
+      <td><strong>${escapeHtml(pkg.title)}</strong></td>
+      <td>${escapeHtml(pkg.location)}</td>
+      <td><strong>${escapeHtml(pkg.price)}</strong></td>
       <td><span class="booking-badge">${escapeHtml(pkg.badge || 'Active')}</span></td>
       <td>
-        <button class="btn btn-outline btn-edit-pkg" data-id="${pkg.id}" style="padding:4px 10px; font-size:0.8rem; margin-right:4px;">Edit</button>
-        <button class="btn btn-outline btn-delete-pkg" data-id="${pkg.id}" style="padding:4px 10px; font-size:0.8rem; color:#e03131; border-color:#e03131;">Delete</button>
+        <button class="btn-action btn-edit-pkg" data-id="${pkg.id}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+        <button class="btn-action delete btn-delete-pkg" data-id="${pkg.id}"><i class="fa-solid fa-trash"></i> Delete</button>
       </td>
     </tr>
   `).join('');
@@ -126,20 +133,85 @@ function renderBookingsTable() {
 
   const bookings = getBookings();
   if (bookings.length === 0) {
-    tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px;">No bookings recorded yet.</td></tr>`;
+    tableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:24px; color:#888;">No pilgrim bookings recorded yet.</td></tr>`;
     return;
   }
 
   tableBody.innerHTML = bookings.map(b => `
     <tr>
       <td><strong>${b.id}</strong></td>
-      <td>${escapeHtml(b.userName)}<br><small>${escapeHtml(b.userEmail)}</small></td>
+      <td>${escapeHtml(b.userName)}<br><small style="color:#777;">${escapeHtml(b.userEmail)}</small></td>
+      <td>${escapeHtml(b.phone || '-')}</td>
       <td>${escapeHtml(b.packageName)}</td>
-      <td>${b.travelers}</td>
+      <td>${b.travelers || 1} Person(s)</td>
       <td>${b.travelDate || '-'}</td>
-      <td><span class="booking-badge">${b.status || 'Confirmed'}</span></td>
+      <td>
+        <select class="status-select" data-id="${b.docId || b.id}">
+          <option value="Confirmed" ${b.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+          <option value="Pending" ${b.status === 'Pending' ? 'selected' : ''}>Pending</option>
+          <option value="Completed" ${b.status === 'Completed' ? 'selected' : ''}>Completed</option>
+          <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+        </select>
+      </td>
+      <td>
+        <button class="btn-action delete btn-delete-booking" data-id="${b.docId || b.id}"><i class="fa-solid fa-trash"></i> Delete</button>
+      </td>
     </tr>
   `).join('');
+
+  tableBody.querySelectorAll('.status-select').forEach(sel => {
+    sel.addEventListener('change', async (e) => {
+      const id = e.target.getAttribute('data-id');
+      const newStatus = e.target.value;
+      await updateBookingStatus(id, newStatus);
+      renderMetrics();
+    });
+  });
+
+  tableBody.querySelectorAll('.btn-delete-booking').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const id = e.currentTarget.getAttribute('data-id');
+      if (confirm('Delete this booking permanently?')) {
+        await deleteBooking(id);
+        renderBookingsTable();
+        renderMetrics();
+      }
+    });
+  });
+}
+
+function renderReviewsTable() {
+  const tableBody = document.getElementById('admin-reviews-list');
+  if (!tableBody) return;
+
+  const reviews = getReviews();
+  if (reviews.length === 0) {
+    tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:24px; color:#888;">No reviews submitted yet.</td></tr>`;
+    return;
+  }
+
+  tableBody.innerHTML = reviews.map(r => `
+    <tr>
+      <td><strong>${escapeHtml(r.name)}</strong><br><small style="color:#777;">${escapeHtml(r.location || 'India')}</small></td>
+      <td><span style="color:#FFA000;">${'★'.repeat(r.rating || 5)}</span> (${r.rating || 5}/5)</td>
+      <td>"${escapeHtml(r.comment)}"</td>
+      <td>${r.date || '-'}</td>
+      <td>
+        <button class="btn-action delete btn-delete-review" data-id="${r.docId || r.id}"><i class="fa-solid fa-trash"></i> Delete</button>
+      </td>
+    </tr>
+  `).join('');
+
+  tableBody.querySelectorAll('.btn-delete-review').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const id = e.currentTarget.getAttribute('data-id');
+      if (confirm('Remove this devotee review?')) {
+        await deleteReview(id);
+        renderReviewsTable();
+        renderMetrics();
+      }
+    });
+  });
 }
 
 function initTabSwitching() {
@@ -170,16 +242,18 @@ function initPackageModal() {
     const duration = document.getElementById('pkg-form-duration').value.trim();
     const image = document.getElementById('pkg-form-image').value.trim();
     const badge = document.getElementById('pkg-form-badge').value.trim();
+    const groupSize = document.getElementById('pkg-form-group')?.value.trim() || '12-15 Pilgrims';
+    const description = document.getElementById('pkg-form-desc')?.value.trim() || '';
 
     if (id) {
       const idx = packages.findIndex(p => p.id === id);
       if (idx >= 0) {
-        packages[idx] = { ...packages[idx], title, location, price, duration, image, badge };
+        packages[idx] = { ...packages[idx], title, location, price, duration, image, badge, groupSize, description };
       }
     } else {
       const newPkg = {
         id: 'pkg-' + Date.now(),
-        title, location, price, duration, image, badge,
+        title, location, price, duration, image, badge, groupSize, description,
         rating: 5.0,
         reviewsCount: 1
       };
@@ -196,6 +270,9 @@ function initPackageModal() {
 function openPackageFormModal(pkg) {
   const modal = document.getElementById('admin-pkg-modal');
   const overlay = document.getElementById('modal-overlay');
+  const titleEl = document.getElementById('admin-pkg-modal-title');
+
+  if (titleEl) titleEl.innerText = pkg ? 'Edit Yatra Package' : 'Add New Yatra Package';
 
   document.getElementById('pkg-form-id').value = pkg ? pkg.id : '';
   document.getElementById('pkg-form-title').value = pkg ? pkg.title : '';
@@ -204,6 +281,8 @@ function openPackageFormModal(pkg) {
   document.getElementById('pkg-form-duration').value = pkg ? pkg.duration : '';
   document.getElementById('pkg-form-image').value = pkg ? pkg.image : '';
   document.getElementById('pkg-form-badge').value = pkg ? pkg.badge || '' : '';
+  if (document.getElementById('pkg-form-group')) document.getElementById('pkg-form-group').value = pkg ? pkg.groupSize || '' : '';
+  if (document.getElementById('pkg-form-desc')) document.getElementById('pkg-form-desc').value = pkg ? pkg.description || '' : '';
 
   modal?.classList.add('active');
   overlay?.classList.add('active');

@@ -99,3 +99,27 @@ export const subscribeAuth = (callback) => {
     }
   });
 };
+
+/**
+ * Map Firebase auth error codes to user-friendly messages
+ */
+export const getFirebaseErrorMessage = (error) => {
+  if (!error) return 'An unexpected error occurred.';
+
+  const code = error.code || '';
+  const map = {
+    'auth/user-not-found': 'No account found with this email. Please sign up first.',
+    'auth/wrong-password': 'Incorrect password. Please try again.',
+    'auth/invalid-credential': 'Invalid email or password. Please check and try again.',
+    'auth/invalid-email': 'Please enter a valid email address.',
+    'auth/email-already-in-use': 'An account with this email already exists. Try logging in.',
+    'auth/weak-password': 'Password is too weak. Use at least 6 characters.',
+    'auth/too-many-requests': 'Too many failed attempts. Please wait a moment and try again.',
+    'auth/network-request-failed': 'Network error. Please check your internet connection.',
+    'auth/operation-not-allowed': 'This sign-in method is not enabled. Contact support.',
+    'auth/user-disabled': 'This account has been disabled. Contact support.',
+    'auth/requires-recent-login': 'Please log in again to complete this action.',
+  };
+
+  return map[code] || error.message || 'Authentication failed. Please try again.';
+};

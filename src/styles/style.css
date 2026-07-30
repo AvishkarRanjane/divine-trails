@@ -237,14 +237,28 @@ button {
 }
 
 .btn-outline {
-  background: rgba(255, 255, 255, 0.08);
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  color: #ffffff !important;
+  background: #ffffff;
+  border: 1.5px solid var(--secondary);
+  color: var(--secondary) !important;
   font-weight: 600;
-  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .btn-outline:hover {
+  background: var(--secondary) !important;
+  color: #ffffff !important;
+  border-color: var(--secondary);
+}
+
+.hero .btn-outline {
+  background: rgba(255, 255, 255, 0.12);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  color: #ffffff !important;
+  backdrop-filter: blur(4px);
+  box-shadow: none;
+}
+
+.hero .btn-outline:hover {
   background: #ffffff !important;
   color: #004D40 !important;
   border-color: #ffffff;
@@ -2176,6 +2190,19 @@ body {
 
 [data-theme="dark"] .package-price {
   color: #FF9933;
+}
+
+[data-theme="dark"] .btn-outline {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid var(--primary);
+  color: var(--primary) !important;
+  box-shadow: none;
+}
+
+[data-theme="dark"] .btn-outline:hover {
+  background: var(--primary) !important;
+  color: #ffffff !important;
+  border-color: var(--primary);
 }
 
 /* ========================================================================

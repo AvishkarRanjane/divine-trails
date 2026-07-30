@@ -10,49 +10,77 @@ import {
   serverTimestamp 
 } from 'firebase/firestore';
 
-// Default Packages List
+// Default Packages List with exact App UI/UX Images
 export const DEFAULT_PACKAGES = [
   {
     id: "pkg-1",
-    title: "Kedarnath Temple Yatra",
+    title: "Char Dham Yatra (Kedarnath & Badrinath)",
     location: "Uttarakhand",
-    duration: "5 Days / 4 Nights",
+    duration: "10 Days / 9 Nights",
     groupSize: "12-15 Pilgrims",
-    price: "₹18,500",
+    price: "₹24,500",
     badge: "Popular",
     rating: 4.9,
-    reviewsCount: 128,
-    image: "https://images.unsplash.com/photo-1626714494113-498506165824?auto=format&fit=crop&w=800&q=80",
-    description: "Experience the ultimate spiritual journey to Kedarnath Temple located in the serene Himalayas.",
-    itinerary: ["Day 1: Haridwar to Guptkashi", "Day 2: Trek to Kedarnath", "Day 3: Temple Darshan", "Day 4: Return Trek to Guptkashi", "Day 5: Haridwar Drop"]
+    reviewsCount: 156,
+    image: "/assets/images/pkg_chardham_1782374096140.png",
+    description: "Experience the ultimate spiritual journey to Yamunotri, Gangotri, Kedarnath, and Badrinath in the Himalayas.",
+    itinerary: ["Day 1: Haridwar to Barkot", "Day 2: Yamunotri Darshan", "Day 3: Uttarkashi", "Day 4: Gangotri Darshan", "Day 5: Guptkashi", "Day 6: Kedarnath Trek", "Day 7: Kedarnath Darshan", "Day 8: Badrinath", "Day 9: Rudraprayag", "Day 10: Haridwar Drop"]
   },
   {
     id: "pkg-2",
-    title: "Varanasi & Sarnath Tour",
+    title: "Varanasi Ganga Aarti & Kashi Vishwanath",
     location: "Uttar Pradesh",
     duration: "4 Days / 3 Nights",
     groupSize: "10-20 Pilgrims",
     price: "₹12,999",
     badge: "Sacred",
     rating: 4.8,
-    reviewsCount: 95,
-    image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=800&q=80",
-    description: "Immerse yourself in the eternal city of Light, Ganga Aarti, and ancient Buddhist heritage in Sarnath.",
-    itinerary: ["Day 1: Arrival Varanasi & Evening Aarti", "Day 2: Morning Boat Ride & Temple Tour", "Day 3: Sarnath Excursion", "Day 4: Shopping & Departure"]
+    reviewsCount: 112,
+    image: "/assets/images/pkg_varanasi_1782374079347.png",
+    description: "Immerse yourself in the eternal city of Light, Kashi Vishwanath VIP Darshan, Ganga Aarti, and Sarnath excursion.",
+    itinerary: ["Day 1: Arrival Varanasi & Evening Aarti", "Day 2: Morning Sunrise Boat Ride & Temple Tour", "Day 3: Sarnath Heritage Excursion", "Day 4: Shopping & Departure"]
   },
   {
     id: "pkg-3",
-    title: "Tirupati Balaji Darshan",
+    title: "Tirupati Balaji VIP Darshan Yatra",
     location: "Andhra Pradesh",
     duration: "3 Days / 2 Nights",
     groupSize: "Small Group",
     price: "₹9,500",
     badge: "VIP Darshan",
     rating: 4.9,
-    reviewsCount: 210,
-    image: "https://images.unsplash.com/photo-1609766857041-ed402ea8069a?auto=format&fit=crop&w=800&q=80",
-    description: "Hassle-free special entry darshan at Tirumala Venkateswara Temple with seamless travel arrangements.",
-    itinerary: ["Day 1: Arrival Tirupati", "Day 2: Tirumala Temple VIP Darshan", "Day 3: Local Temples & Departure"]
+    reviewsCount: 230,
+    image: "/assets/images/pkg_tirupati_1782374069785.png",
+    description: "Hassle-free special entry darshan at Tirumala Venkateswara Temple with premium accommodation and transportation.",
+    itinerary: ["Day 1: Arrival Tirupati", "Day 2: Tirumala Temple VIP Darshan", "Day 3: Padmavathi Temple & Departure"]
+  },
+  {
+    id: "pkg-4",
+    title: "Ashtavinayak Ganesha Circuit",
+    location: "Maharashtra",
+    duration: "4 Days / 3 Nights",
+    groupSize: "15-25 Pilgrims",
+    price: "₹8,999",
+    badge: "Popular",
+    rating: 4.9,
+    reviewsCount: 88,
+    image: "/assets/images/pkg_ashtavinayak_1782374042038.png",
+    description: "Complete pilgrimage tour of the eight sacred Ganesha temples across Maharashtra with AC coach and sattvic meals.",
+    itinerary: ["Day 1: Mayureshwar, Siddhivinayak & Ballaleshwar", "Day 2: Varadavinayak, Chintamani & Girijatmaj", "Day 3: Vighnahar & Mahaganapati", "Day 4: Return Pune/Mumbai"]
+  },
+  {
+    id: "pkg-5",
+    title: "South India Grand Temple Circuit",
+    location: "Tamil Nadu & Kerala",
+    duration: "7 Days / 6 Nights",
+    groupSize: "10-15 Pilgrims",
+    price: "₹19,800",
+    badge: "Sacred",
+    rating: 4.9,
+    reviewsCount: 142,
+    image: "/assets/images/pkg_southindia_1782374059257.png",
+    description: "Explore the architectural marvels of Madurai Meenakshi, Rameshwaram Jyotirlinga, Tanjore, and Kanchipuram.",
+    itinerary: ["Day 1: Chennai to Kanchipuram", "Day 2: Tanjore Brihadisvara Temple", "Day 3: Madurai Meenakshi Temple", "Day 4: Rameshwaram Darshan", "Day 5: Kanyakumari", "Day 6: Trivandrum Padmanabhaswamy", "Day 7: Departure"]
   }
 ];
 
@@ -61,7 +89,13 @@ export const getPackages = () => {
   const local = localStorage.getItem('divineTrailsPackages');
   if (local) {
     try {
-      return JSON.parse(local);
+      const parsed = JSON.parse(local);
+      // Ensure we use new image paths if cached version had old unsplash URLs
+      if (parsed && parsed.length > 0 && parsed[0].image && parsed[0].image.includes('unsplash')) {
+        localStorage.setItem('divineTrailsPackages', JSON.stringify(DEFAULT_PACKAGES));
+        return DEFAULT_PACKAGES;
+      }
+      return parsed;
     } catch {
       return DEFAULT_PACKAGES;
     }

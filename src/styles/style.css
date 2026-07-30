@@ -594,7 +594,7 @@ header.scrolled .user-dropdown-toggle:hover {
   text-align: center;
   background:
     linear-gradient(135deg, rgba(0,77,64,0.88) 0%, rgba(0,34,26,0.92) 100%),
-    url('https://images.unsplash.com/photo-1626714494113-498506165824?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    url('/assets/images/hero_bg_1782374022780.png') center/cover no-repeat;
   color: var(--text-inv);
   padding: 120px 24px 80px;
   overflow: hidden;

@@ -124,9 +124,9 @@ function renderPackagesList() {
       if (idx >= 0) {
         const currentStatus = packages[idx].status || 'published';
         packages[idx].status = currentStatus === 'published' ? 'draft' : 'published';
-        await savePackagesToCloud(packages);
         renderPackagesList();
         renderMetrics();
+        await savePackagesToCloud(packages);
       }
     });
   });
@@ -144,9 +144,9 @@ function renderPackagesList() {
       const id = e.currentTarget.getAttribute('data-id');
       if (confirm('Are you sure you want to delete this package?')) {
         packages = packages.filter(p => p.id !== id);
-        await savePackagesToCloud(packages);
         renderPackagesList();
         renderMetrics();
+        await savePackagesToCloud(packages);
       }
     });
   });
@@ -344,13 +344,17 @@ function initPackageModal() {
       packages.push(newPkg);
     }
 
-    await savePackagesToCloud(packages);
+    // Close modal & render UI immediately for instantaneous user feedback
     closeAdminModal();
     renderPackagesList();
     renderMetrics();
+
+    // Async sync to cloud in background
+    await savePackagesToCloud(packages);
   };
 
-  btnSaveDraft?.addEventListener('click', () => {
+  btnSaveDraft?.addEventListener('click', (e) => {
+    e.preventDefault();
     savePackage('draft');
   });
 
@@ -394,11 +398,16 @@ function openPackageFormModal(pkg) {
   modal?.classList.add('active');
   overlay?.classList.add('active');
 
-  modal?.querySelector('.modal-close')?.addEventListener('click', closeAdminModal);
-  overlay?.addEventListener('click', closeAdminModal);
+  const closeBtn = modal?.querySelector('.modal-close');
+  if (closeBtn) closeBtn.onclick = closeAdminModal;
+  if (overlay) overlay.onclick = closeAdminModal;
 }
 
 function closeAdminModal() {
+  const modal = document.getElementById('admin-pkg-modal');
+  const overlay = document.getElementById('modal-overlay');
+  if (modal) modal.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
   document.querySelectorAll('.modal, .modal-overlay').forEach(el => el.classList.remove('active'));
 }
 

@@ -378,6 +378,7 @@
                                 <th>Location</th>
                                 <th>Price</th>
                                 <th>Badge</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -492,7 +493,10 @@
                 <label for="pkg-form-desc">Description</label>
                 <textarea id="pkg-form-desc" rows="3" placeholder="Brief tour overview..."></textarea>
             </div>
-            <button type="submit" class="btn-primary" style="width:100%;">Save Package</button>
+            <div style="display:flex; gap:12px; margin-top:20px;">
+                <button type="button" id="btn-save-draft" class="btn-action" style="flex:1; padding:12px; justify-content:center; font-weight:600;"><i class="fa-solid fa-floppy-disk"></i> Save Draft</button>
+                <button type="submit" id="btn-save-publish" class="btn-primary" style="flex:1; padding:12px; justify-content:center;"><i class="fa-solid fa-globe"></i> Publish Live</button>
+            </div>
         </form>
     </div>
 

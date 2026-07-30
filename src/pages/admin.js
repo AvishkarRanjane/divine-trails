@@ -1,7 +1,7 @@
 import '../styles/style.css';
 import { getCurrentUser, isAdminUser, logout } from '../services/authService.js';
 import { 
-  getPackages, 
+  getAllPackagesAdmin,
   savePackagesToCloud, 
   subscribePackages, 
   getBookings, 
@@ -40,14 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadData() {
-  packages = getPackages();
+  packages = getAllPackagesAdmin();
   renderMetrics();
   renderPackagesList();
   renderBookingsTable();
   renderReviewsTable();
 
-  subscribePackages((list) => {
-    packages = list;
+  subscribePackages(() => {
+    packages = getAllPackagesAdmin();
     renderMetrics();
     renderPackagesList();
   });
@@ -72,7 +72,7 @@ function renderMetrics() {
   const elRev = document.getElementById('stat-revenue');
   const elTotalRev = document.getElementById('stat-total-reviews');
 
-  if (elActive) elActive.innerText = packages.length;
+  if (elActive) elActive.innerText = packages.filter(p => p.status === 'published').length;
   if (elBookings) elBookings.innerText = bookings.length;
   if (elTotalRev) elTotalRev.innerText = reviews.length;
 
@@ -92,19 +92,44 @@ function renderPackagesList() {
   const tableBody = document.getElementById('admin-packages-list');
   if (!tableBody) return;
 
-  tableBody.innerHTML = packages.map(pkg => `
-    <tr>
-      <td><img src="${pkg.image}" alt="${escapeHtml(pkg.title)}" style="width:48px; height:48px; border-radius:8px; object-fit:cover;"></td>
-      <td><strong>${escapeHtml(pkg.title)}</strong></td>
-      <td>${escapeHtml(pkg.location)}</td>
-      <td><strong>${escapeHtml(pkg.price)}</strong></td>
-      <td><span class="booking-badge">${escapeHtml(pkg.badge || 'Active')}</span></td>
-      <td>
-        <button class="btn-action btn-edit-pkg" data-id="${pkg.id}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-        <button class="btn-action delete btn-delete-pkg" data-id="${pkg.id}"><i class="fa-solid fa-trash"></i> Delete</button>
-      </td>
-    </tr>
-  `).join('');
+  tableBody.innerHTML = packages.map(pkg => {
+    const isPublished = pkg.status !== 'draft';
+    return `
+      <tr>
+        <td><img src="${pkg.image}" alt="${escapeHtml(pkg.title)}" style="width:48px; height:48px; border-radius:8px; object-fit:cover;"></td>
+        <td><strong>${escapeHtml(pkg.title)}</strong></td>
+        <td>${escapeHtml(pkg.location)}</td>
+        <td><strong>${escapeHtml(pkg.price)}</strong></td>
+        <td><span class="booking-badge">${escapeHtml(pkg.badge || 'Active')}</span></td>
+        <td>
+          <span class="booking-badge ${!isPublished ? 'cancelled' : ''}">${isPublished ? 'Published' : 'Draft'}</span>
+        </td>
+        <td>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button class="btn-action btn-toggle-publish" data-id="${pkg.id}" style="${!isPublished ? 'background:#e6f4ea; color:#137333; border-color:#ceead6;' : ''}">
+              <i class="fa-solid fa-globe"></i> ${isPublished ? 'Unpublish' : 'Publish Live'}
+            </button>
+            <button class="btn-action btn-edit-pkg" data-id="${pkg.id}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+            <button class="btn-action delete btn-delete-pkg" data-id="${pkg.id}"><i class="fa-solid fa-trash"></i> Delete</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  tableBody.querySelectorAll('.btn-toggle-publish').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const id = e.currentTarget.getAttribute('data-id');
+      const idx = packages.findIndex(p => p.id === id);
+      if (idx >= 0) {
+        const currentStatus = packages[idx].status || 'published';
+        packages[idx].status = currentStatus === 'published' ? 'draft' : 'published';
+        await savePackagesToCloud(packages);
+        renderPackagesList();
+        renderMetrics();
+      }
+    });
+  });
 
   tableBody.querySelectorAll('.btn-edit-pkg').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -240,6 +265,7 @@ function initPackageModal() {
   const inputFile = document.getElementById('pkg-form-image-file');
   const previewContainer = document.getElementById('pkg-img-preview-container');
   const previewImg = document.getElementById('pkg-img-preview');
+  const btnSaveDraft = document.getElementById('btn-save-draft');
 
   // Mode switching
   btnModeUrl?.addEventListener('click', () => {
@@ -282,9 +308,7 @@ function initPackageModal() {
     }
   });
 
-  const form = document.getElementById('admin-package-form');
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  const savePackage = async (targetStatus) => {
     const id = document.getElementById('pkg-form-id').value;
     const title = document.getElementById('pkg-form-title').value.trim();
     const location = document.getElementById('pkg-form-location').value.trim();
@@ -295,15 +319,25 @@ function initPackageModal() {
     const groupSize = document.getElementById('pkg-form-group')?.value.trim() || '12-15 Pilgrims';
     const description = document.getElementById('pkg-form-desc')?.value.trim() || '';
 
+    if (!title || !location || !price || !duration) {
+      alert('Please fill in Title, Location, Price and Duration.');
+      return;
+    }
+
     if (id) {
       const idx = packages.findIndex(p => p.id === id);
       if (idx >= 0) {
-        packages[idx] = { ...packages[idx], title, location, price, duration, image, badge, groupSize, description };
+        packages[idx] = { 
+          ...packages[idx], 
+          title, location, price, duration, image, badge, groupSize, description,
+          status: targetStatus 
+        };
       }
     } else {
       const newPkg = {
         id: 'pkg-' + Date.now(),
         title, location, price, duration, image, badge, groupSize, description,
+        status: targetStatus,
         rating: 5.0,
         reviewsCount: 1
       };
@@ -314,6 +348,16 @@ function initPackageModal() {
     closeAdminModal();
     renderPackagesList();
     renderMetrics();
+  };
+
+  btnSaveDraft?.addEventListener('click', () => {
+    savePackage('draft');
+  });
+
+  const form = document.getElementById('admin-package-form');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    await savePackage('published');
   });
 }
 

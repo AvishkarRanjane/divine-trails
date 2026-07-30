@@ -26,6 +26,7 @@ export const DEFAULT_PACKAGES = [
     transport: "AC Deluxe Coach / Private SUV",
     meals: "Pure Vegetarian Sattvic Meals",
     vipEntry: "Included (Kedarnath & Badrinath)",
+    status: "published",
     image: "/assets/images/pkg_chardham_1782374096140.png",
     description: "Experience the ultimate Himalayan pilgrimage across the revered shrines of Yamunotri, Gangotri, Kedarnath, and Badrinath. Meticulously organized with helicopter pass assistance, deluxe hotels, and experienced yatra guides.",
     inclusions: [
@@ -63,6 +64,7 @@ export const DEFAULT_PACKAGES = [
     transport: "AC Traveller / Private Car",
     meals: "Breakfast & Traditional Banarasi Dinners",
     vipEntry: "Included (Kashi Vishwanath Sparsh Darshan)",
+    status: "published",
     image: "/assets/images/pkg_varanasi_1782374079347.png",
     description: "Immerse yourself in the eternal city of Light. Experience VIP Sparsh Darshan at Kashi Vishwanath Temple, private boat ride during sunrise, mesmerising Ganga Aarti at Dashashwamedh Ghat, and Sarnath Buddhist heritage.",
     inclusions: [
@@ -93,6 +95,7 @@ export const DEFAULT_PACKAGES = [
     transport: "AC Private Vehicle",
     meals: "South Indian Sattvic Meals + Tirupati Laddu Prasadam",
     vipEntry: "Guaranteed TTD Special Entry Pass (₹300)",
+    status: "published",
     image: "/assets/images/pkg_tirupati_1782374069785.png",
     description: "Enjoy a smooth, hassle-free pilgrimage to Lord Venkateswara Temple in Tirumala with official TTD Special Entry passes, tonsure assistance, Tirupati Laddu prasadam, and surrounding sacred temples.",
     inclusions: [
@@ -122,8 +125,9 @@ export const DEFAULT_PACKAGES = [
     transport: "AC Bus / Pushback Coach",
     meals: "Pure Veg Breakfast, Lunch & Dinner",
     vipEntry: "Direct Entry Assistance",
+    status: "published",
     image: "/assets/images/pkg_ashtavinayak_1782374042038.png",
-    description: "Complete traditional circuit of the eight swayambhu (self-manifested) Ganesha temples in Maharashtra in sequence: Morgaon, Siddhatek, Pali, Mahad, Theur, Lenyadri, Ozar, and Ranjangaon.",
+    description: "Complete pilgrimage tour of the eight sacred Ganesha temples across Maharashtra with AC coach and sattvic meals.",
     inclusions: [
       "Complete 8 Temples Tour in Correct Traditional Sequence",
       "Comfortable Hotel Accommodation in Pune & Ozar",
@@ -152,6 +156,7 @@ export const DEFAULT_PACKAGES = [
     transport: "AC Tempo Traveller / Bus",
     meals: "Traditional South Indian Thali Meals",
     vipEntry: "Special Entry Passes at Madurai & Rameshwaram",
+    status: "published",
     image: "/assets/images/pkg_southindia_1782374059257.png",
     description: "Journey through Dravidian architectural wonders: Madurai Meenakshi, Tanjore Brihadisvara, Rameshwaram Ramanathaswamy (22 Holy Wells), Kanyakumari temple, and Trivandrum Padmanabhaswamy.",
     inclusions: [
@@ -174,15 +179,15 @@ export const DEFAULT_PACKAGES = [
 ];
 
 // --- PACKAGES ---
-export const getPackages = () => {
+export const getAllPackagesAdmin = () => {
   const local = localStorage.getItem('divineTrailsPackages');
   if (local) {
     try {
       const parsed = JSON.parse(local);
-      // Refresh cache if totalSpots field is missing in cached version
-      if (parsed && parsed.length > 0 && !parsed[0].totalSpots) {
-        localStorage.setItem('divineTrailsPackages', JSON.stringify(DEFAULT_PACKAGES));
-        return DEFAULT_PACKAGES;
+      if (parsed && parsed.length > 0 && !parsed[0].status) {
+        // Migration to add status
+        parsed.forEach(p => { p.status = p.status || 'published'; });
+        localStorage.setItem('divineTrailsPackages', JSON.stringify(parsed));
       }
       return parsed;
     } catch {
@@ -190,6 +195,12 @@ export const getPackages = () => {
     }
   }
   return DEFAULT_PACKAGES;
+};
+
+// Main website gets only published packages
+export const getPackages = () => {
+  const all = getAllPackagesAdmin();
+  return all.filter(p => p.status !== 'draft');
 };
 
 export const subscribePackages = (callback) => {

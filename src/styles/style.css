@@ -133,11 +133,12 @@ button {
 }
 
 /* ---------- Utility ---------- */
-.container {
-  width: 100%;
-  max-width: 1200px;
+.container,
+.nav-container {
+  width: 96%;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 16px;
 }
 
 .section-padding {
@@ -358,9 +359,6 @@ header.scrolled .user-dropdown-toggle {
 }
 
 .nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;

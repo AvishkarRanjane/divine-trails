@@ -315,24 +315,24 @@ function renderPackages(list) {
 
   container.innerHTML = list.map(pkg => `
     <div class="package-card" data-id="${pkg.id}">
-      <div class="package-img-wrapper btn-card-details" data-id="${pkg.id}">
+      ${pkg.badge ? `<div class="package-badge">${escapeHtml(pkg.badge)}</div>` : ''}
+      <div class="package-img-wrapper btn-card-details" data-id="${pkg.id}" style="cursor:pointer;">
         <img src="${pkg.image}" alt="${escapeHtml(pkg.title)}" loading="lazy">
-        ${pkg.badge ? `<span class="package-badge">${escapeHtml(pkg.badge)}</span>` : ''}
       </div>
       <div class="package-content">
         <h3 class="package-title btn-card-details" data-id="${pkg.id}" style="cursor:pointer;">${escapeHtml(pkg.title)}</h3>
         <div class="package-info-grid">
-          <div class="package-info-item"><i class="fa-solid fa-location-dot"></i> ${escapeHtml(pkg.location)}</div>
-          <div class="package-info-item"><i class="fa-regular fa-clock"></i> ${escapeHtml(pkg.duration)}</div>
-          <div class="package-info-item"><i class="fa-solid fa-users"></i> ${escapeHtml(pkg.groupSize || 'Flexible')}</div>
-          <div class="package-info-item"><i class="fa-solid fa-star" style="color:#FFA000;"></i> ${pkg.rating || 5.0} (${pkg.reviewsCount || 0})</div>
+          <div class="package-info-item"><i class="fa-solid fa-clock"></i> <span>${escapeHtml(pkg.duration)}</span></div>
+          <div class="package-info-item"><i class="fa-solid fa-hotel"></i> <span>4-Star Hotel Stay</span></div>
+          <div class="package-info-item"><i class="fa-solid fa-utensils"></i> <span>Sattvic Meals</span></div>
+          <div class="package-info-item"><i class="fa-solid fa-car"></i> <span>AC Vehicle</span></div>
         </div>
-        <p style="font-size:0.9rem; color:var(--text-2); margin-bottom:14px;">${escapeHtml(pkg.description || '')}</p>
+        <p style="font-size:0.88rem; color:var(--text-2); margin-bottom:16px; line-height:1.5;">${escapeHtml(pkg.description || '')}</p>
         <div class="package-footer">
           <div class="package-price">${escapeHtml(pkg.price)} <span>/ person</span></div>
           <div style="display:flex; gap:8px;">
-            <button class="btn btn-outline btn-view-details" data-id="${pkg.id}" style="padding:8px 14px; font-size:0.82rem;">Details</button>
-            <button class="btn btn-primary btn-book-pkg" data-id="${pkg.id}" style="padding:8px 16px; font-size:0.82rem;">Book Now</button>
+            <button class="btn btn-outline btn-view-details" data-id="${pkg.id}">View Details</button>
+            <button class="btn btn-primary btn-book-pkg" data-id="${pkg.id}">Book Now</button>
           </div>
         </div>
       </div>

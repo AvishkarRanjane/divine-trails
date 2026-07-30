@@ -375,7 +375,7 @@ header.scrolled .user-dropdown-toggle {
   white-space: nowrap;
 }
 
-.logo i { color: var(--primary); }
+.logo i { color: #FFC107; }
 
 .navbar {
   flex: 1;
@@ -911,14 +911,14 @@ header.scrolled .user-dropdown-toggle:hover {
 }
 
 .filter-btn:hover {
-  border-color: var(--primary);
-  color: var(--primary);
+  border-color: var(--secondary);
+  color: var(--secondary);
 }
 
 .filter-btn.active {
-  background: var(--primary);
+  background: var(--secondary);
   color: #fff;
-  border-color: var(--primary);
+  border-color: var(--secondary);
 }
 
 .packages-grid {
@@ -935,6 +935,7 @@ header.scrolled .user-dropdown-toggle:hover {
   display: flex;
   flex-direction: column;
   transition: all var(--duration-normal) var(--ease-spring);
+  position: relative;
 }
 
 .package-card:hover {
@@ -965,14 +966,16 @@ header.scrolled .user-dropdown-toggle:hover {
   top: 14px;
   left: 14px;
   padding: 5px 14px;
-  background: var(--primary);
-  color: #fff;
+  background: rgba(0, 51, 34, 0.9);
+  color: #FFC107;
+  border: 1px solid rgba(255, 193, 7, 0.4);
   font-size: 0.75rem;
   font-weight: 600;
   border-radius: var(--radius-full);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   z-index: 1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .package-content {
